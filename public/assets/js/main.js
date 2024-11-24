@@ -149,3 +149,54 @@
 
 })(jQuery);
 
+//MyJs
+//Format Price
+function formatCurrency(element) {
+    let value = parseInt(element.value, 10);
+    element.value = value.toLocaleString(); // Thêm dấu phân cách nghìn
+}
+
+window.onload = function() {
+    formatCurrency(document.getElementById('amount'));
+};
+
+//SearchProducts
+function searchproducts() {
+    let query = document.getElementById('search-input').value;
+
+    // Gửi yêu cầu AJAX đến Laravel để lọc sản phẩm
+    fetch(`/search-products?query=${query}`)
+        .then(response => response.json())
+        .then(data => {
+            let productList = document.getElementById('showProducts');
+            productList.innerHTML = ''; // Xóa danh sách cũ
+
+            // Hiển thị các sản phẩm đã lọc
+            data.data.forEach(product => {
+                let truncatedText = product.Motasanpham.slice(0, 50)+'...';
+                let amount = product.Dongia; 
+                let VND = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+                let productHTML = `
+                
+                                                 <div class="col-md-6 col-lg-6 col-xl-4 ">
+                                                        <div class="rounded position-relative fruite-item">
+                <div class="fruite-img">
+                                               <img src="assets/img/${product.Hinh}" class="img-fluid w-100 rounded-top" alt="">
+                                            </div>
+                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
+                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                <h4>${product.Tensanpham}</h4>
+                                                <p>${truncatedText}</p>
+                                                <div class="d-flex justify-content-between flex-lg-wrap">
+                                                    <p class="text-dark fs-5 fw-bold mb-0">${VND}</p>
+                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            </div>
+                `;
+                productList.innerHTML += productHTML;
+            });
+        })
+        .catch(error => console.error('Error fetching products:', error));
+}
