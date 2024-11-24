@@ -12,4 +12,5 @@ class ShopdetailController extends Controller
         $template = 'component.shopdetail';
         return view('layout', compact('template'));
     }
+
 }
