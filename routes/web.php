@@ -1,5 +1,9 @@
 <?php
+<<<<<<< HEAD
 //admin
+=======
+
+>>>>>>> master
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -10,6 +14,7 @@ use App\Http\Middleware\LoginMiddleware;
 use App\Http\Middleware\AuthenticateMiddleware;
 
 
+<<<<<<< HEAD
 
 //user
 use App\Http\Controllers\TrangchuController;
@@ -21,6 +26,8 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
 
 
+=======
+>>>>>>> master
 Route::get('/', function () {
     return view('welcome');
 });
@@ -41,6 +48,7 @@ Route::get('dashboard', [DashboardController::class, 'index'])
 
 
 //Product
+<<<<<<< HEAD
 Route::middleware([AuthenticateMiddleware::class])->group(function() {
     Route::get('product', [ProductController::class, 'index'])
         ->name('product.index');
@@ -51,6 +59,21 @@ Route::middleware([AuthenticateMiddleware::class])->group(function() {
     Route::delete('product/{id}', [ProductController::class, 'delete'])
         ->name('product.delete');
 });
+=======
+Route::get('product', [ProductController::class, 'index'])
+->name('product.index')
+->middleware(AuthenticateMiddleware::class);
+Route::get('product/create', [ProductController::class, 'create'])
+->name('product.create')
+->middleware(AuthenticateMiddleware::class);
+Route::post('product', [ProductController::class, 'handlecreate'])
+->name('handlecreate')
+->middleware(AuthenticateMiddleware::class);
+
+Route::delete('product/{id}', [ProductController::class, 'delete'])
+->name('product.delete')
+->middleware(AuthenticateMiddleware::class);
+>>>>>>> master
 
 Route::post('product/update/{id}', [ProductController::class, 'update'])
 ->name('product.update')
@@ -72,6 +95,7 @@ Route::get('order', [OrderController::class, 'index'])
 ->middleware(AuthenticateMiddleware::class);
 Route::post('order/detail/{id}', [OrderController::class, 'detail'])
 ->name('order.detail')
+<<<<<<< HEAD
 ->middleware(AuthenticateMiddleware::class);
 
 
@@ -100,3 +124,6 @@ Route::get('checkout', [CheckoutController::class, 'index'])
 //Contact
 Route::get('contact', [ContactController::class, 'index'])
 ->name('contact');
+=======
+->middleware(AuthenticateMiddleware::class);
+>>>>>>> master
