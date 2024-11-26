@@ -23,7 +23,16 @@ class ShopController extends Controller
     public function search(Request $request){
         $query = $request->input('query');
         $template ='component.shop';
-        $data = sanpham::where('Tensanpham','like','%'.$query.'%')->get();
+        if(empty($request))
+            $data = sanpham::paginate(5);
+        else
+        {
+        $data = sanpham::where('Tensanpham','like','%'.$query.'%')
+                        ->orWhere('IDLoaisanpham','like','%'.$query.'%')
+                        ->get();
+                    }
         return response()->json(['data'=>$data]);
     }
+
+    
 }

@@ -63,7 +63,6 @@ Route::get('product/create', [ProductController::class, 'create'])
 Route::post('product', [ProductController::class, 'handlecreate'])
 ->name('handlecreate')
 ->middleware(AuthenticateMiddleware::class);
-
 Route::delete('product/{id}', [ProductController::class, 'delete'])
 ->name('product.delete')
 ->middleware(AuthenticateMiddleware::class);
@@ -100,6 +99,13 @@ Route::post('order/detail/{id}', [OrderController::class, 'detail'])
 /* User */
 //Trang chủ
 
+
+//ProductDetail
+Route::get('detail/{id}',[ShopdetailController::class,'detail'])
+->name('detail');
+
+
+
 //Testimonial
 Route::get('testimonial', [TestimonialController::class, 'index'])
 ->name('testimonial');
@@ -117,5 +123,4 @@ Route::get('checkout', [CheckoutController::class, 'index'])
 ->name('checkout');
 //Contact
 Route::get('contact', [ContactController::class, 'index'])
-->name('contact')
-->middleware(AuthenticateMiddleware::class);
+->name('contact');
