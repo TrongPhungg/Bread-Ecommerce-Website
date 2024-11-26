@@ -62,7 +62,6 @@ Route::get('product/create', [ProductController::class, 'create'])
 Route::post('product', [ProductController::class, 'handlecreate'])
 ->name('handlecreate')
 ->middleware(AuthenticateMiddleware::class);
-
 Route::delete('product/{id}', [ProductController::class, 'delete'])
 ->name('product.delete')
 ->middleware(AuthenticateMiddleware::class);
@@ -118,6 +117,13 @@ Route::delete('user/delete/{id}', [UserController::class, 'delete'])
 /* User */
 //Trang chủ
 
+
+//ProductDetail
+Route::get('detail/{id}',[ShopdetailController::class,'detail'])
+->name('detail');
+
+
+
 //Testimonial
 Route::get('testimonial', [TestimonialController::class, 'index'])
 ->name('testimonial');
@@ -135,6 +141,7 @@ Route::get('checkout', [CheckoutController::class, 'index'])
 ->name('checkout');
 //Contact
 Route::get('contact', [ContactController::class, 'index'])
+
 ->name('contact')
 ->middleware(AuthenticateMiddleware::class);
 //Content
@@ -144,6 +151,8 @@ Route::get('content', [ContentController::class, 'index'])
 Route::get('news', [NewsController::class, 'index'])
 ->name('news');
 
+
 // Thêm routes cho create và store
 Route::get('/admin/user/create', [UserController::class, 'create'])->name('user.create');
 Route::post('/admin/user/store', [UserController::class, 'store'])->name('user.store');
+

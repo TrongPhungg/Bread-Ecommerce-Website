@@ -161,18 +161,17 @@ window.onload = function() {
 };
 
 //SearchProducts
-function searchproducts() {
-    let query = document.getElementById('search-input').value;
-
+function searchProducts(query) {
     // Gửi yêu cầu AJAX đến Laravel để lọc sản phẩm
-    fetch(`/search-products?query=${query}`)
+    let url = 'search-products?query='+(query ? query :'');
+    fetch(url) 
         .then(response => response.json())
         .then(data => {
             let productList = document.getElementById('showProducts');
             productList.innerHTML = ''; // Xóa danh sách cũ
 
             // Hiển thị các sản phẩm đã lọc
-            data.data.forEach(product => {
+            data.data.forEach(product =>{
                 let truncatedText = product.Motasanpham.slice(0, 50)+'...';
                 let amount = product.Dongia; 
                 let VND = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
@@ -194,9 +193,26 @@ function searchproducts() {
                                             </div>
                                             </div>
                                             </div>
+                                            
                 `;
                 productList.innerHTML += productHTML;
             });
         })
         .catch(error => console.error('Error fetching products:', error));
 }
+
+
+//Search when input
+
+document.getElementById('search-input').addEventListener('input',()=>{
+    let query = document.getElementById('search-input').value;
+    searchProducts(query);
+})
+
+//Search when click
+document.querySelectorAll('.category-item').forEach(category=>{
+    category.addEventListener('click',()=>{
+        let categoryId= category.getAttribute('data-product-id');
+        searchProducts(categoryId);
+    })
+})
