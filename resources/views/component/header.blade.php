@@ -201,7 +201,7 @@
                                     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
                                 }
                             </style>
-                            <a href="#" class="my-auto">
+                            <a href="{{ route('auth.admin') }}" class="my-auto">
                                 <i class="fas fa-user fa-2x"></i>
                             </a>
                         </div>
