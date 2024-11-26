@@ -19,8 +19,8 @@ use App\Http\Controllers\ShopdetailController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
-
-
+use App\Http\Controllers\ContentController;
+use App\Http\Controllers\NewsController;
 
 Route::get('/', [TrangchuController::class,'index']
 )->name('trangchu');
@@ -123,4 +123,15 @@ Route::get('checkout', [CheckoutController::class, 'index'])
 ->name('checkout');
 //Contact
 Route::get('contact', [ContactController::class, 'index'])
+
+->name('contact')
+->middleware(AuthenticateMiddleware::class);
+//Content
+Route::get('content', [ContentController::class, 'index'])
+->name('content');
+//News
+Route::get('news', [NewsController::class, 'index'])
+->name('news');
+
 ->name('contact');
+
