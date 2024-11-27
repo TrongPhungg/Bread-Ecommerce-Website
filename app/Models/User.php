@@ -49,4 +49,7 @@ class User extends Authenticatable
         'role' => 'integer',
         'password' => 'hashed'
     ];
+
+    public $timestamps = false;
+
 }
