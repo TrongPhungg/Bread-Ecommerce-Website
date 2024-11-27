@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Middleware\LoginMiddleware;
 use App\Http\Middleware\AuthenticateMiddleware;
+use App\Http\Controllers\Admin\UserController;
 
 
 //user
@@ -38,8 +39,6 @@ Route::post('login', [AuthController::class, 'login'])
 Route::get('dashboard', [DashboardController::class, 'index'])
 ->name('dashboard.index')
 ->middleware(AuthenticateMiddleware::class);
-
-
 
 
 Route::middleware([AuthenticateMiddleware::class])->group(function() {
@@ -106,9 +105,28 @@ Route::post('order/detail/{id}', [OrderController::class, 'detail'])
 Route::put('order/{id}', [OrderController::class, 'update'])
 ->name('order.update');
 
-
-
-
+//danhsachuser
+Route::get('user', [UserController::class, 'index'])
+->name('user.index')
+->middleware(AuthenticateMiddleware::class);
+//create
+Route::get('user/create', [UserController::class, 'create'])
+->name('user.create')
+->middleware(AuthenticateMiddleware::class);
+Route::post('user/store', [UserController::class, 'store'])
+->name('user.store')
+->middleware(AuthenticateMiddleware::class);
+//edit
+Route::get('user/edit/{id}', [UserController::class, 'edit'])
+    ->name('user.edit')
+    ->middleware(AuthenticateMiddleware::class);
+Route::put('user/update/{id}', [UserController::class, 'update'])
+    ->name('user.update')
+    ->middleware(AuthenticateMiddleware::class);
+//delete
+Route::delete('user/delete/{id}', [UserController::class, 'delete'])
+    ->name('user.delete')
+    ->middleware(AuthenticateMiddleware::class);
 
 /* User */
 //Trang chủ
@@ -145,4 +163,9 @@ Route::get('content', [ContentController::class, 'index'])
 //News
 Route::get('news', [NewsController::class, 'index'])
 ->name('news');
+
+
+// Thêm routes cho create và store
+Route::get('/admin/user/create', [UserController::class, 'create'])->name('user.create');
+Route::post('/admin/user/store', [UserController::class, 'store'])->name('user.store');
 
