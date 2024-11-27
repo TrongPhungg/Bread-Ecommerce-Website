@@ -43,7 +43,7 @@
                                     <i class="fa fa-shopping-bag fa-2x"></i>
                                     <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">2</span>
                                 </a>
-                                <div class="cart-hover-content position-absolute bg-white shadow p-3" style="width: 300px; right: 0; top: 100%; display: none; z-index: 1000; border-radius: 20px;">
+                                <div class="cart-items cart-hover-content position-absolute bg-white shadow p-3" style="width: 300px; right: 0; top: 100%; display: none; z-index: 1000; border-radius: 20px;">
                                     <div class="cart-item d-flex align-items-center mb-3">
                                         <img src="{{ asset('assets/img/vegetable-item-3.png') }}" class="img-fluid rounded-circle" style="width: 50px;" alt="">
                                         <div class="ms-3">
@@ -59,7 +59,7 @@
                                     </div>
                                     <hr>
                                     <div class="d-flex justify-content-between">
-                                        <h6>Total:</h6>
+                                        <h6 onclick="loadCart()">Total:</h6>
                                         <h6>$8.97</h6>
                                     </div>
                                     <div class="d-flex justify-content-between mt-3">

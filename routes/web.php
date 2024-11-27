@@ -169,3 +169,15 @@ Route::get('news', [NewsController::class, 'index'])
 Route::get('/admin/user/create', [UserController::class, 'create'])->name('user.create');
 Route::post('/admin/user/store', [UserController::class, 'store'])->name('user.store');
 
+//API giỏ hàng
+Route::middleware('api')->group(function () {
+    Route::get('/test', function () {
+        return response()->json(['message' => 'API is working!']);
+    });
+});
+Route::prefix('cart')->group(function(){
+    Route::get('/api',[CartController::class,'index']);
+    Route::any('/api/add',[CartController::class,'add']);
+    Route::put('/api/update',[CartController::class,'update']);
+    Route::delete('/api/delete',[CartController::class,'delete']);
+});

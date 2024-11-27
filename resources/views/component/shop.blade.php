@@ -62,27 +62,38 @@
                                     </div>
                                 </div>
                             </div>
+                            
                             <div class="col-lg-9" >
                                 <div class="row g-4 justify-content-center" id="showProducts" >
                                     @foreach($data as $v)
+                                    
                                     <div class="col-md-6 col-lg-6 col-xl-4 ">
                                         <div class="rounded position-relative fruite-item">
+                                            <form id="addProductForm">
+                                                <meta name="csrf-token" content="{{ csrf_token() }}">
+                                            @csrf
+                                            <input  type="text" value={{$v->IDSanpham}} id="product-id" hidden>
                                             <a href="{{ route('detail', $v->IDSanpham) }}">
                                             <div class="fruite-img">
                                                 <img src="{{ asset('assets/img/'.$v->Hinh) }}" class="img-fluid w-100 rounded-top" alt="">
                                             </div>
                                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <h4>{{$v->Tensanpham}}</h4>
+                                                <h4 id="product-name">{{$v->Tensanpham}}</h4>
                                                 <p>{{Str::limit($v->Motasanpham,50)}}</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
-                                                    <p class="text-dark fs-5 fw-bold mb-0">{{number_format($v->Dongia,0,',',',').'VNĐ'}}</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                                    <p class="text-dark fs-5 fw-bold mb-0" id="product-price" >{{number_format($v->Dongia,0,',',',').'VNĐ'}}</p>
+                                                </a>
+                                                    <button type="submit" class="add-to-cart btn border border-secondary rounded-pill px-3 text-primary">
+                                                    <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                                    </button>
+                                                </form>
                                                 </div>
                                             </div>
-                                            </a>
+                                            
                                         </div>
                                     </div>
+                                    
                                     @endforeach
                                     <div class="col-12" id="pagination">
                                         <div class=" d-flex justify-content-center mt-5">
