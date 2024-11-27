@@ -28,4 +28,12 @@ class OrderController extends Controller
         // dd($data);
         return view('admin.layout',compact('template','data','dssp','dh'));
     }
+
+    public function update($id, Request $request){
+        $sp = donhang::where('IDDonhang',$id)
+                ->update([
+                    'Trangthaidh' => $request->Trangthaidh
+                ]);
+        return redirect('/order');
+    }
 }

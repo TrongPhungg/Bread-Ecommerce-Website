@@ -162,21 +162,18 @@ window.onload = function() {
 
 //SearchProducts
 function searchProducts(query) {
-    // Gửi yêu cầu AJAX đến Laravel để lọc sản phẩm
     let url = 'search-products?query='+(query ? query :'');
     fetch(url) 
         .then(response => response.json())
         .then(data => {
             let productList = document.getElementById('showProducts');
-            productList.innerHTML = ''; // Xóa danh sách cũ
+            productList.innerHTML = ''; 
 
-            // Hiển thị các sản phẩm đã lọc
             data.data.forEach(product =>{
                 let truncatedText = product.Motasanpham.slice(0, 50)+'...';
                 let amount = product.Dongia; 
                 let VND = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
                 let productHTML = `
-                
                                                  <div class="col-md-6 col-lg-6 col-xl-4 ">
                                                         <div class="rounded position-relative fruite-item">
                 <div class="fruite-img">

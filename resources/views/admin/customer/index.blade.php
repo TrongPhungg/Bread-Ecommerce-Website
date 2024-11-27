@@ -33,7 +33,7 @@
                 <td>{{$v->TenKhachhang}}</td>
                 <td>{{$v->Email}}</td>
                 <td>
-                    <form action="" method="POST"
+                    <form action="{{route('customer.update',$v->IDKhachhang)}}" method="POST"
                         style="display: inline;">
                             @csrf
                             <button type="submit" style="background:none; border:none; cursor:pointer;">

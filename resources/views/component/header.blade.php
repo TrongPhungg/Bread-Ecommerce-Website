@@ -15,8 +15,7 @@
             </div>
             <div class="container px-0">
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                    <a href="{{ route('trangchu') }}" class="navbar-brand"><h1 class="text-primary display-6">Bánh Mì PB</h1></a>
-                    <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6">PhongHien's Bakery</h1></a>
+                    <a href="{{ route('trangchu') }}" class="navbar-brand"><h1 class="text-primary display-6">PhongHien's Bakery</h1></a>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="fa fa-bars text-primary"></span>
                     </button>
@@ -24,7 +23,6 @@
                         <div class="navbar-nav mx-auto">
                             <a href="{{ route('trangchu') }}" class="nav-item nav-link {{ request()->routeIs('trangchu') ? 'active' : '' }}">Home</a>
                             <a href="{{ route('shop') }}" class="nav-item nav-link {{ request()->routeIs('shop') ? 'active' : '' }}">Shop</a>
-                            <a href="{{ route('shopdetail') }}" class="nav-item nav-link {{ request()->routeIs('shopdetail') ? 'active' : '' }}">Shop Detail</a>
                             <a href="{{ route('content') }}" class="nav-item nav-link {{ request()->routeIs('content') ? 'active' : '' }}">Content</a>
                             <a href="{{ route('news') }}" class="nav-item nav-link {{ request()->routeIs('news') ? 'active' : '' }}">News</a>
                             <div class="nav-item dropdown">
@@ -53,19 +51,6 @@
                                             <div class="d-flex justify-content-between">
                                                 <span class="text-primary">$2.99</span>
                                                 <span class="text-secondary ms-3">x 1</span>
-                                            </div>
-                                        </div>
-                                        <button class="btn btn-sm text-danger ms-auto remove-item">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                    <div class="cart-item d-flex align-items-center mb-3">
-                                        <img src="{{ asset('assets/img/vegetable-item-3.png') }}" class="img-fluid rounded-circle" style="width: 50px;" alt="">
-                                        <div class="ms-3">
-                                            <h6 class="mb-0">Product Name</h6>
-                                            <div class="d-flex justify-content-between">
-                                                <span class="text-primary">$2.99</span>
-                                                <span class="text-secondary ms-3">x 2</span>
                                             </div>
                                         </div>
                                         <button class="btn btn-sm text-danger ms-auto remove-item">

@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class donhang extends Model
+class tintuc extends Model
 {
-    protected $table='donhang';
+    protected $table = 'tintuc';
     public $timestamps = false;
 }
