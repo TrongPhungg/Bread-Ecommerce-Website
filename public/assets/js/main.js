@@ -157,26 +157,24 @@ function formatCurrency(element) {
 }
 
 window.onload = function() {
-    formatCurrency(document.getElementById('amount'));
+    if(document.getElementById('amount'))
+        formatCurrency(document.getElementById('amount'));
 };
 
 //SearchProducts
 function searchProducts(query) {
-    // Gửi yêu cầu AJAX đến Laravel để lọc sản phẩm
     let url = 'search-products?query='+(query ? query :'');
     fetch(url) 
         .then(response => response.json())
         .then(data => {
             let productList = document.getElementById('showProducts');
-            productList.innerHTML = ''; // Xóa danh sách cũ
+            productList.innerHTML = ''; 
 
-            // Hiển thị các sản phẩm đã lọc
             data.data.forEach(product =>{
                 let truncatedText = product.Motasanpham.slice(0, 50)+'...';
                 let amount = product.Dongia; 
                 let VND = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
                 let productHTML = `
-                
                                                  <div class="col-md-6 col-lg-6 col-xl-4 ">
                                                         <div class="rounded position-relative fruite-item">
                 <div class="fruite-img">
@@ -204,15 +202,61 @@ function searchProducts(query) {
 
 //Search when input
 
-document.getElementById('search-input').addEventListener('input',()=>{
+const searchInput = document.getElementById('search-input')
+if(searchInput){
+    searchInput.addEventListener('input',()=>{
     let query = document.getElementById('search-input').value;
     searchProducts(query);
 })
+}
 
 //Search when click
-document.querySelectorAll('.category-item').forEach(category=>{
+const searchClick = document.querySelectorAll('.category-item');
+if(searchClick){
+    searchClick.forEach(category=>{
     category.addEventListener('click',()=>{
         let categoryId= category.getAttribute('data-product-id');
         searchProducts(categoryId);
     })
 })
+}
+
+//API Cart
+const apiBaseUrl = 'http://127.0.0.1:8000/cart/api';
+async function loadCart(){
+    const response = await fetch(apiBaseUrl);
+    const cart = await response.json();
+
+    const cartItems = document.getElementById('cart-items');
+    cartItems.innerHTML = '';
+
+    for (let id in cart) {
+        const item = cart[id];
+        const li = document.createElement('li');
+        li.textContent = `${item.name} - $${item.price} x ${item.quantity}`;
+        cartItems.appendChild(li);
+    }
+}
+document.getElementById('addProductForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const name = document.getElementById('product-name').value;
+    const id = parseInt(document.getElementById('product-id').value);
+    const price = parseFloat(document.getElementById('product-price').value);
+    const quantity = 1;
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    const response = await fetch(`${apiBaseUrl}/add`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+         },
+        body: JSON.stringify({ id, name, price, quantity }),
+        mode: 'cors',
+    });
+
+    const result = await response.json();
+    alert(result.message);
+    loadCart();
+});
+

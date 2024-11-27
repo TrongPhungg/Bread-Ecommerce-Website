@@ -113,7 +113,7 @@
           <li class="nav-item">
             <a data-bs-toggle="collapse" href="#sidebarLayouts">
               <i class="fas fa-th-list"></i>
-              <p>Quản lí người dùng</p>
+              <p>Quản lí tài khoản</p>
               <span class="caret"></span>
             </a>
             <div class="collapse" id="sidebarLayouts">

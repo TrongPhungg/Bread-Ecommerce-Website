@@ -28,14 +28,31 @@
                 <td>Trạng thái đơn hàng</td>
                 <td>Tổng tiền</td>
                 <td></td>
-                <td></td>
             </tr>
             @foreach($data as $v)
             <tr>
                 <td>{{$v->IDDonhang}}</td>
                 <td>{{$v->TenKhachhang}}</td>
-                <td>{{$v->Ngaylapdh}}</td>
-                <td>{{$v->Trangthaidh}}</td>
+                <td>{{\Carbon\Carbon::parse($v->Ngaylapdh)->format('d/m/Y')}}</td>
+                <td>
+                  @switch($v->Trangthaidh)
+                    @case("HD")
+                    <span class="badge bg-dark">Đã hủy</span>
+                    @break
+                    @case("DTT")
+                    <span class="badge bg-warning">Đã thanh toán</span>
+                    @break
+                    @case("DXN")
+                    <span class="badge bg-primary">Đã xác nhận</span>
+                    @break
+                    @case("DG")
+                    <span class="badge bg-danger">Đang giao hàng</span>
+                    @break
+                    @case("HT")
+                    <span class="badge bg-success">Hoàn tất</span>
+                    @break
+                  @endswitch
+                </td>
                 <td>{{$v->Tongtien}}</td>
                 <td>
                     <form action="{{route('order.detail',$v->IDDonhang)}}" method="POST"
@@ -44,16 +61,6 @@
                             <button type="submit" style="background:none; border:none; cursor:pointer;">
                             <a class="fas fa-shopping-cart fa-2x " style="color:rgb(63, 192, 231);"></a>
                             </button>
-                    </form>
-                </td>
-                <td>
-                    <form action="" method="POST"
-                    style="display: inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm  không?');">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" style="background:none; border:none; cursor:pointer;">
-                            <a class="fa fa-ban fa-2x" style="color:red;"></a>
-                        </button>
                     </form>
                 </td>
             </tr>

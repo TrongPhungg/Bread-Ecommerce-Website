@@ -53,6 +53,71 @@
                     <td>{{number_format($v->Dongia *$v->Soluongsp,0,',',',').'VNĐ'}}</td>
                 </tr>
             @endforeach
+            @if($dh->Trangthaidh != "HT" && $dh->Trangthaidh != "HD")
+            <tr>
+              <td >
+                <form action="{{route('order.update',$dh->IDDonhang)}}" method="POST">
+                  @csrf
+                  @method('put')
+                    <input
+                    hidden
+                    name="Trangthaidh"
+                    value="HD"
+                    />
+                    <button type="submit" class="btn btn-dark">Huỷ đơn</button>
+                </form>
+              </td>
+              <td>
+                <form action="{{route('order.update',$dh->IDDonhang)}}" method="POST">
+                  @csrf
+                  @method('put')
+                    <input
+                    hidden
+                    name="Trangthaidh"
+                    value="DXN"
+                    />
+                    <button type="submit" class="btn btn-primary">Đã xác nhận</button>
+                </form>
+              </td>
+              <td>
+                <form action="{{route('order.update',$dh->IDDonhang)}}" method="POST">
+                  @csrf
+                  @method('put')
+                    <input
+                    hidden
+                    name="Trangthaidh"
+                    value="DTT"
+                    />
+                    <button type="submit" class="btn btn-warning">Đã thanh toán</button>
+                </form>
+              </td>
+              <td>
+                <form action="{{route('order.update',$dh->IDDonhang)}}" method="POST">
+                  @csrf
+                  @method('put')
+                    <input
+                    hidden
+                    name="Trangthaidh"
+                    value="DG"
+                    />
+                    <button type="submit" class="btn btn-danger">Đang giao</button>
+                </form>
+              </td>
+              <td>
+                <form action="{{route('order.update',$dh->IDDonhang)}}" method="POST">
+                  @csrf
+                  @method('put')
+                    <input
+                    hidden
+                    name="Trangthaidh"
+                    value="HT"
+                    />
+                    <button type="submit" class="btn btn-success">Hoàn tất</button>
+                </form>
+              </td>
+              <td></td>
+            </tr>
+            @endif
           </table>
          <div>
 

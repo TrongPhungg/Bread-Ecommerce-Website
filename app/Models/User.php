@@ -51,4 +51,5 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Khachhang::class, 'IDkhachhang', 'id');
     }
+    public $timestamps = false;
 }

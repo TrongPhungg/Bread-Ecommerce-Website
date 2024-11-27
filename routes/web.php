@@ -83,6 +83,17 @@ Route::get('customer', [CustomerController::class, 'index'])
 ->name('customer.index')
 ->middleware(AuthenticateMiddleware::class);
 
+Route::post('customer/update/{id}', [CustomerController::class, 'update'])
+->name('customer.update')
+->middleware(AuthenticateMiddleware::class);
+Route::put('customer/{id}', [CustomerController::class, 'handleupdate'])
+->name('handleupdate')
+->middleware(AuthenticateMiddleware::class);
+
+Route::delete('customer/{id}', [CustomerController::class, 'delete'])
+->name('customer.delete')
+->middleware(AuthenticateMiddleware::class);
+
 
 //Order
 Route::get('order', [OrderController::class, 'index'])
@@ -91,6 +102,9 @@ Route::get('order', [OrderController::class, 'index'])
 Route::post('order/detail/{id}', [OrderController::class, 'detail'])
 ->name('order.detail')
 ->middleware(AuthenticateMiddleware::class);
+
+Route::put('order/{id}', [OrderController::class, 'update'])
+->name('order.update');
 
 //danhsachuser
 Route::get('user', [UserController::class, 'index'])
@@ -146,16 +160,32 @@ Route::get('checkout', [CheckoutController::class, 'index'])
 ->name('checkout');
 //Contact
 Route::get('contact', [ContactController::class, 'index'])
+->name('contact');
 
-->name('contact')
-->middleware(AuthenticateMiddleware::class);
 //Content
 Route::get('content', [ContentController::class, 'index'])
 ->name('content');
 //News
 Route::get('news', [NewsController::class, 'index'])
 ->name('news');
+
 //Customer
 Route::get('profile', [ProfileController::class, 'index'])
 ->name('profile')
 ->middleware(AuthenticateMiddleware::class);
+
+
+
+
+//API giỏ hàng
+Route::middleware('api')->group(function () {
+    Route::get('/test', function () {
+        return response()->json(['message' => 'API is working!']);
+    });
+});
+Route::prefix('cart')->group(function(){
+    Route::get('/api',[CartController::class,'index']);
+    Route::any('/api/add',[CartController::class,'add']);
+    Route::put('/api/update',[CartController::class,'update']);
+    Route::delete('/api/delete',[CartController::class,'delete']);
+});
