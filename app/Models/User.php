@@ -18,14 +18,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'email',
         'password',
-        'address',
-        'birthday',
         'role',
         'remember_token',
-        'email_verified_at'
+        'email_verified_at',
+        'IDkhachhang'
     ];
 
     /**
@@ -45,8 +43,12 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'birthday' => 'date',
         'role' => 'integer',
         'password' => 'hashed'
     ];
+
+    public function khachhang()
+    {
+        return $this->belongsTo(Khachhang::class, 'IDkhachhang', 'id');
+    }
 }

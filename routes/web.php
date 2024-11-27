@@ -22,6 +22,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', [TrangchuController::class,'index']
 )->name('trangchu');
@@ -114,6 +115,10 @@ Route::delete('user/delete/{id}', [UserController::class, 'delete'])
     ->name('user.delete')
     ->middleware(AuthenticateMiddleware::class);
 
+
+
+
+
 /* User */
 //Trang chủ
 
@@ -150,9 +155,7 @@ Route::get('content', [ContentController::class, 'index'])
 //News
 Route::get('news', [NewsController::class, 'index'])
 ->name('news');
-
-
-// Thêm routes cho create và store
-Route::get('/admin/user/create', [UserController::class, 'create'])->name('user.create');
-Route::post('/admin/user/store', [UserController::class, 'store'])->name('user.store');
-
+//Customer
+Route::get('profile', [ProfileController::class, 'index'])
+->name('profile')
+->middleware(AuthenticateMiddleware::class);

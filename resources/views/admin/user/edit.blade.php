@@ -42,10 +42,6 @@
                             <label>ID</label>
                             <input type="text" class="form-control" name="id" value="{{ old('id', $user->id) }}" required>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label>Tên</label>
-                            <input type="text" class="form-control" name="name" value="{{ old('name', $user->name) }}" required>
-                        </div>
 
                         <div class="form-group col-md-6">
                             <label>Email</label>
@@ -55,16 +51,6 @@
                         <div class="form-group col-md-6">
                             <label>Mật khẩu mới (để trống nếu không đổi)</label>
                             <input type="password" class="form-control" name="password">
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            <label>Địa chỉ</label>
-                            <input type="text" class="form-control" name="address" value="{{ old('address', $user->address) }}">
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            <label>Ngày sinh</label>
-                            <input type="date" class="form-control" name="birthday" value="{{ old('birthday', $user->birthday) }}">
                         </div>
 
                         <div class="form-group col-md-6">
