@@ -67,9 +67,9 @@
                                 <div class="row g-4 justify-content-center" id="showProducts" >
                                     @foreach($data as $v)
                                     
-                                    <div class="col-md-6 col-lg-6 col-xl-4 ">
+                                    <div class="col-md-6 col-lg-6 col-xl-4  " id="ProductForms">
                                         <div class="rounded position-relative fruite-item">
-                                            <form id="addProductForm">
+                                            <form id="form{{$v->IDSanpham}}">
                                                 <meta name="csrf-token" content="{{ csrf_token() }}">
                                             @csrf
                                             <input  type="text" value={{$v->IDSanpham}} id="product-id" hidden>

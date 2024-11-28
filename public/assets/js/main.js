@@ -222,7 +222,7 @@ if(searchClick){
 }
 
 //API Cart
-const apiBaseUrl = 'http://127.0.0.1:8000/cart/api';
+const apiBaseUrl = 'http://127.0.0.1:8000/api';
 async function loadCart(){
     const response = await fetch(apiBaseUrl);
     const cart = await response.json();
@@ -233,35 +233,79 @@ async function loadCart(){
     for (let id in cart) {
         const item = cart[id];
         const li = document.createElement('li');
-        li.textContent = `${item.name} - $${item.price} x ${item.quantity}`;
+        li.innerHTML = `<div class="cart-item d-flex align-items-center mb-3">
+                                    <img src="{{ asset('assets/img/vegetable-item-3.png') }}" class="img-fluid rounded-circle" style="width: 50px;" alt="">
+                                    <div class="ms-3">
+                                        <h6 class="mb-0">${item.name}</h6>
+                                        <div class="d-flex justify-content-between">
+                                            <span class="text-primary">${item.price}</span>
+                                            <span class="text-secondary ms-3">x ${item.quantity}</span>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-sm text-danger ms-auto remove-item">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>`;
         cartItem.appendChild(li);
+
+        // ${item.name} - $${item.price} x ${item.quantity}
     }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    
+// document.getElementById('form'+id).addEventListener('submit', async (event) => {
+//     event.preventDefault();
+//     const id = document.getElementById('product-id').value;
+//     const name = document.getElementById('product-name').innerText;
+    
+//     const price = parseFloat(document.getElementById('product-price').innerText);
+//     const quantity = 3;
+//     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-document.getElementById('addProductForm').addEventListener('submit', async (event) => {
-    event.preventDefault();
+//     const response = await fetch(`${apiBaseUrl}/add`, {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json',
+//             'X-CSRF-TOKEN': csrfToken,
+//          },
+//         body: JSON.stringify({ id, name, price, quantity }),
+//         mode: 'cors',
+//     });
 
-    const name = document.getElementById('product-name').innerText;
-    const id = parseInt(document.getElementById('product-id').value);
-    const price = parseFloat(document.getElementById('product-price').innerText);
-    const quantity = 3;
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+//     const result = await response.json();
+//     alert(result.message);
+//     loadCart();
+// });
 
-    const response = await fetch(`${apiBaseUrl}/add`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken,
-         },
-        body: JSON.stringify({ id, name, price, quantity }),
-        mode: 'cors',
+
+
+let forms = document.querySelectorAll('#ProductForms');
+forms.forEach(form => {
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        // Lấy ID từ chính form hiện tại
+        const id = form.querySelector('#product-id').value;
+        const name = form.querySelector('#product-name').innerText;
+        const price = parseFloat(form.querySelector('#product-price').innerText);
+        const quantity = 3;
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        // Gửi yêu cầu tới API
+        const response = await fetch(`${apiBaseUrl}/add`, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+            },
+            body: JSON.stringify({ id, name, price, quantity }),
+            mode: 'cors',
+        });
+
+        const result = await response.json();
+        alert(result.message);
+        loadCart();
     });
-
-    const result = await response.json();
-    alert(result.message);
-    loadCart();
 });
-
 });
 
