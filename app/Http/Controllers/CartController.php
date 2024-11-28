@@ -16,13 +16,7 @@ class CartController extends Controller
     }
     public function add(Request $request)
     {
-        $request->validate([
-            'id' => 'required|integer',
-            'name' => 'required|string',
-            'price' => 'required|numeric',
-            'quantity' => 'required|integer|min:1',
-        ]);
-
+        
         $cart = session()->get('cart', []);
 
         if (isset($cart[$request->id])) {

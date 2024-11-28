@@ -172,7 +172,7 @@ Route::post('/admin/user/store', [UserController::class, 'store'])->name('user.s
 //API giỏ hàng
 Route::middleware('api')->group(function () {
     Route::get('/test', function () {
-        return response()->json(['message' => 'API is working!']);
+        return response()->json(['message' => 'API Phung is working!']);
     });
 });
 Route::prefix('cart')->group(function(){
