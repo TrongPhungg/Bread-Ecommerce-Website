@@ -227,23 +227,26 @@ async function loadCart(){
     const response = await fetch(apiBaseUrl);
     const cart = await response.json();
 
-    const cartItems = document.getElementById('cart-items');
-    cartItems.innerHTML = '';
+    const cartItem = document.getElementById('cart-item');
+    cartItem.innerHTML = '';
 
     for (let id in cart) {
         const item = cart[id];
         const li = document.createElement('li');
         li.textContent = `${item.name} - $${item.price} x ${item.quantity}`;
-        cartItems.appendChild(li);
+        cartItem.appendChild(li);
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+
 document.getElementById('addProductForm').addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    const name = document.getElementById('product-name').value;
+    const name = document.getElementById('product-name').innerText;
     const id = parseInt(document.getElementById('product-id').value);
-    const price = parseFloat(document.getElementById('product-price').value);
-    const quantity = 1;
+    const price = parseFloat(document.getElementById('product-price').innerText);
+    const quantity = 3;
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     const response = await fetch(`${apiBaseUrl}/add`, {
@@ -258,5 +261,7 @@ document.getElementById('addProductForm').addEventListener('submit', async (even
     const result = await response.json();
     alert(result.message);
     loadCart();
+});
+
 });
 

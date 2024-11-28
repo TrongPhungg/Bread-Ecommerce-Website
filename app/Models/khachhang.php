@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class khachhang extends Model
+class Khachhang extends Model
 {
-    protected $table ='khachhang';
-    public $timestamps = false;
+    protected $table = 'khachhang';
+    protected $primaryKey = 'IDKhachhang';
+    public $incrementing = false;
+    protected $keyType = 'string';
 }
