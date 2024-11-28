@@ -42,9 +42,10 @@
                             <label>ID</label>
                             <input type="text" class="form-control" name="id" value="{{ old('id ') }}" required>
                         </div>
+
                         <div class="form-group col-md-6">
-                            <label>Tên</label>
-                            <input type="text" class="form-control" name="name" value="{{ old('name') }}" required>
+                            <label>ID khách hàng</label>
+                            <input type="text" class="form-control" name="IDkhachhang" value="{{ old('IDkhachhang ') }}" required>
                         </div>
 
                         <div class="form-group col-md-6">
@@ -55,16 +56,6 @@
                         <div class="form-group col-md-6">
                             <label>Mật khẩu</label>
                             <input type="password" class="form-control" name="password" required>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            <label>Địa chỉ</label>
-                            <input type="text" class="form-control" name="address" value="{{ old('address') }}">
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            <label>Ngày sinh</label>
-                            <input type="date" class="form-control" name="birthday" value="{{ old('birthday') }}">
                         </div>
 
                         <div class="form-group col-md-6">

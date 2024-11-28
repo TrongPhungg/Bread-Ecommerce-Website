@@ -59,10 +59,8 @@
         <table class="mt-3 table table-hover">
           <tr>
             <td>ID</td>
-            <td>Tên</td>
+            <td>ID khách hàng</td>
             <td>Email</td>
-            <td>Địa chỉ</td>
-            <td>Ngày sinh</td>
             <td>Vai trò</td>
             <td></td>
             <td></td>
@@ -70,10 +68,8 @@
           @foreach($data as $user)
           <tr>
             <td>{{$user->id}}</td>
-            <td>{{$user->name}}</td>
+            <td>{{$user->IDKhachhang}}</td>
             <td>{{$user->email}}</td>
-            <td>{{$user->address}}</td>
-            <td>{{$user->birthday ? date('d/m/Y', strtotime($user->birthday)) : ''}}</td>
             <td>
               @if($user->role === 1)
                 Admin

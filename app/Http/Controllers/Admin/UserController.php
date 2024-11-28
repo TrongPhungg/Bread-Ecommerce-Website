@@ -29,7 +29,6 @@ class UserController extends Controller
             $messages = [
                 'id.required' => 'Vui lòng nhập ID',
                 'id.unique' => 'ID đã tồn tại trong hệ thống',
-                'name.required' => 'Vui lòng nhập tên',
                 'email.required' => 'Vui lòng nhập email',
                 'email.email' => 'Email không đúng định dạng',
                 'email.unique' => 'Email đã tồn tại trong hệ thống',
@@ -39,21 +38,16 @@ class UserController extends Controller
 
             $request->validate([
                 'id' => 'required|unique:users',
-                'name' => 'required',
                 'email' => 'required|email:rfc,dns|regex:/^[a-zA-Z0-9]+@.*$/|unique:users',
                 'password' => 'required|min:3',
-                'address' => 'nullable',
-                'birthday' => 'nullable|date',
                 'role' => 'required|in:0,1'
             ], $messages);
 
             $user = new User();
             $user->id = $request->id;
-            $user->name = $request->name;
+            $user->IDkhachhang = $request->IDkhachhang;
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
-            $user->address = $request->address;
-            $user->birthday = $request->birthday;
             $user->role = $request->role;
             $user->save();
 
@@ -72,7 +66,6 @@ class UserController extends Controller
         $messages = [
             'id.required' => 'Vui lòng nhập ID',
             'id.unique' => 'ID đã tồn tại trong hệ thống',
-            'name.required' => 'Vui lòng nhập tên',
             'email.required' => 'Vui lòng nhập email',
             'email.email' => 'Email không đúng định dạng',
             'email.unique' => 'Email đã tồn tại trong hệ thống',
@@ -81,11 +74,8 @@ class UserController extends Controller
 
         $rules = [
             'id' => 'required|unique:users,id,'.$id,
-            'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'nullable|min:3',
-            'address' => 'nullable',
-            'birthday' => 'nullable|date',
             'role' => 'required|in:0,1'
         ];
 
@@ -93,13 +83,10 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
         $user->id = $request->id;
-        $user->name = $request->name;
         $user->email = $request->email;
         if($request->password) {
             $user->password = Hash::make($request->password);
         }
-        $user->address = $request->address;
-        $user->birthday = $request->birthday;
         $user->role = $request->role;
         $user->save();
 

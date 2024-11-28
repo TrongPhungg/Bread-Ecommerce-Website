@@ -4,37 +4,45 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\AuthRequest;
 use Illuminate\Support\Facades\Auth;
-
-
+use App\Http\Requests\AuthRequest;
 class AuthController extends Controller
 {
-
-    public function __construct()
-    {
-        
-    }
-
     public function index()
     {
-        if(Auth::id() > 0) {
-            return redirect()->route('dashboard.index');
+        // Kiểm tra nếu đã đăng nhập
+        if (Auth::check()) {
+            // Nếu là user thường (role = 0) thì chuyển về trang chủ
+            if (Auth::user()->role == 0) {
+                return redirect('/');
+            }
+            // Nếu là admin (role = 1) thì chuyển về dashboard
+            return redirect('dashboard');
         }
-       return view('admin.auth.login');
+        return view('admin.auth.login');
     }
 
     public function login(AuthRequest $request)
     {
-        $credentials = [
-            'email' => $request->input('email'),
-            'password' => $request->input('password'),
-        ];
-        if(Auth::attempt($credentials)) {
-            return redirect()->route('dashboard.index')->with('login_success', 'Đăng nhập thành công');
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            
+            // Kiểm tra role và chuyển hướng
+            if (Auth::user()->role == 1) {
+                return redirect('dashboard'); // Chuyển đến trang admin
+            } else {
+                return redirect('/'); // Chuyển đến trang chủ
+            }
         }
 
-     return redirect()->route('auth.admin')->with('login_error', 'Email hoặc mật khẩu không đúng');
+        return back()->withErrors([
+            'email' => 'Thông tin đăng nhập không chính xác.',
+        ]);
     }
 
     public function logout(Request $request)
@@ -42,7 +50,6 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('auth.admin')->with('logout_success', 'Đăng xuất thành công');
+        return redirect('adminz');
     }
-    
 }
