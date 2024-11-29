@@ -49,7 +49,7 @@ return [
             'port' => env('DB_PORT', '3306'),
 
             'database' => env('DB_DATABASE', 'banhmi'),
-            'database' => env('DB_DATABASE', 'bao'),
+            
 
             'username' => env('DB_USERNAME', 'root'),
             'password' => env('DB_PASSWORD', ''),

@@ -67,15 +67,15 @@
                                 <div class="row g-4 justify-content-center" id="showProducts" >
                                     @foreach($data as $v)
                                     
-                                    <div class="col-md-6 col-lg-6 col-xl-4 ">
+                                    <div class="col-md-6 col-lg-6 col-xl-4  " id="ProductForms">
                                         <div class="rounded position-relative fruite-item">
-                                            <form id="addProductForm">
+                                            <form id="form{{$v->IDSanpham}}">
                                                 <meta name="csrf-token" content="{{ csrf_token() }}">
                                             @csrf
                                             <input  type="text" value={{$v->IDSanpham}} id="product-id" hidden>
                                             <a href="{{ route('detail', $v->IDSanpham) }}">
                                             <div class="fruite-img">
-                                                <img src="{{ asset('assets/img/'.$v->Hinh) }}" class="img-fluid w-100 rounded-top" alt="">
+                                                <img src="{{ asset('assets/img/'.$v->Hinh) }}" id="product-hinh" class="img-fluid w-100 rounded-top" alt="">
                                             </div>
                                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">

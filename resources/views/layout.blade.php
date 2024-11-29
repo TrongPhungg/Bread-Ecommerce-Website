@@ -30,6 +30,9 @@
     </head>
 
     <body>
+        <div id="toast">
+
+        </div>
             @include('component.header')
 
             @include($template)
@@ -46,6 +49,7 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset ('assets/js/main.js') }}"></script>
+    
     </body>
 
 </html>

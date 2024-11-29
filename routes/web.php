@@ -178,14 +178,14 @@ Route::get('profile', [ProfileController::class, 'index'])
 
 
 //API giỏ hàng
-Route::middleware('api')->group(function () {
-    Route::get('/test', function () {
-        return response()->json(['message' => 'API Phung is working!']);
-    });
-});
-Route::prefix('cart')->group(function(){
-    Route::get('/api',[CartController::class,'index']);
-    Route::any('/api/add',[CartController::class,'add']);
-    Route::put('/api/update',[CartController::class,'update']);
-    Route::delete('/api/delete',[CartController::class,'delete']);
+// Route::middleware('api')->group(function () {
+//     Route::get('/test', function () {
+//         return response()->json(['message' => 'API Phung is working!']);
+//     });
+// });
+Route::prefix('api')->group(function(){
+    Route::get('/',[CartController::class,'index']);
+    Route::any('/add',[CartController::class,'add']);
+    Route::put('/update',[CartController::class,'update']);
+    Route::delete('/delete',[CartController::class,'delete']);
 });
