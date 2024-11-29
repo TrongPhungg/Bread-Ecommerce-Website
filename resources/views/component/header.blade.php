@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="me-4">
-                        <div class="position-relative">
+                        <div class="position-relative" onmouseover="loadCart()">
                             <a href="#" class="cart-icon">
                                 <i class="fa fa-shopping-bag fa-2x"></i>
                                 <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">2</span>
@@ -75,13 +75,9 @@
                                     </button>
                                 </div>
                                 <hr>
-                                
                                 <div class="d-flex justify-content-between">
                                     <h6>Total:</h6>
                                     <h6>$8.97</h6>
-                                </div>
-                                <div id="load">
-                                    <button onclick="loadCart()">Load</button>
                                 </div>
                                 <div class="d-flex justify-content-between mt-3">
                                     <a href="{{ route('cart') }}" class="btn btn-primary btn-sm rounded-pill px-4">View Cart</a>
@@ -106,7 +102,6 @@
                                 <a class="dropdown-item py-3 px-4 d-flex align-items-center hover-bg-light" href="">
                                     <i class="fas fa-shopping-bag me-3 text-primary"></i>Đơn hàng</a>
                                 <a class="dropdown-item py-3 px-4 d-flex align-items-center hover-bg-light" href="">
-                                    {{-- <i class="fas fa-id-card me-3 text-primary"></i>{{ $user->IDKhachhang }}</a> --}}
                                 <div class="dropdown-divider my-2"></div>
                                 <a class="dropdown-item py-3 px-4 d-flex align-items-center text-danger hover-bg-danger-light" href="{{ route('auth.logout') }}">
                                     <i class="fas fa-sign-out-alt me-3"></i>Đăng xuất</a>
@@ -254,6 +249,7 @@
                 </style>
             </div>
         </nav>
+        
     </div>
 </div>
 <!-- Navbar End -->

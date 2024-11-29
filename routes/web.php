@@ -178,11 +178,11 @@ Route::get('profile', [ProfileController::class, 'index'])
 
 
 //API giỏ hàng
-Route::middleware('api')->group(function () {
-    Route::get('/test', function () {
-        return response()->json(['message' => 'API Phung is working!']);
-    });
-});
+// Route::middleware('api')->group(function () {
+//     Route::get('/test', function () {
+//         return response()->json(['message' => 'API Phung is working!']);
+//     });
+// });
 Route::prefix('api')->group(function(){
     Route::get('/',[CartController::class,'index']);
     Route::any('/add',[CartController::class,'add']);

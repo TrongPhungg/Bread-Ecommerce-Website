@@ -22,7 +22,7 @@ class CartController extends Controller
         if (isset($cart[$request->id])) {
             $cart[$request->id]['quantity'] += $request->quantity;
         } else {
-            $cart[$request->id] = $request->only('id', 'name', 'price', 'quantity');
+            $cart[$request->id] = $request->only('id', 'name', 'price', 'quantity','hinh');
         }
 
         session()->put('cart', $cart);

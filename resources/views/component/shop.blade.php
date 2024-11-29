@@ -75,7 +75,7 @@
                                             <input  type="text" value={{$v->IDSanpham}} id="product-id" hidden>
                                             <a href="{{ route('detail', $v->IDSanpham) }}">
                                             <div class="fruite-img">
-                                                <img src="{{ asset('assets/img/'.$v->Hinh) }}" class="img-fluid w-100 rounded-top" alt="">
+                                                <img src="{{ asset('assets/img/'.$v->Hinh) }}" id="product-hinh" class="img-fluid w-100 rounded-top" alt="">
                                             </div>
                                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">

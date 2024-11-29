@@ -30,6 +30,9 @@
     </head>
 
     <body>
+        <div id="toast">
+
+        </div>
             @include('component.header')
 
             @include($template)

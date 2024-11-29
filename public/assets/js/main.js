@@ -229,56 +229,41 @@ async function loadCart(){
 
     const cartItem = document.getElementById('cart-item');
     cartItem.innerHTML = '';
-
+    let total = 0;
     for (let id in cart) {
         const item = cart[id];
-        const li = document.createElement('li');
-        li.innerHTML = `<div class="cart-item d-flex align-items-center mb-3">
-                                    <img src="{{ asset('assets/img/vegetable-item-3.png') }}" class="img-fluid rounded-circle" style="width: 50px;" alt="">
+        let itemHTML= `<div class="cart-item d-flex align-items-center mb-3">
+                                    <img src="${item.hinh}" class="img-fluid rounded-circle" style="width: 50px;" alt="">
                                     <div class="ms-3">
                                         <h6 class="mb-0">${item.name}</h6>
                                         <div class="d-flex justify-content-between">
-                                            <span class="text-primary">${item.price}</span>
+                                            <span class="text-primary">${item.price}VND</span>
                                             <span class="text-secondary ms-3">x ${item.quantity}</span>
                                         </div>
                                     </div>
                                     <button class="btn btn-sm text-danger ms-auto remove-item">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                </div>`;
-        cartItem.appendChild(li);
-
-        // ${item.name} - $${item.price} x ${item.quantity}
+                                </div>
+                                `;
+        cartItem.innerHTML += itemHTML;
+        total += item.price*item.quantity;
     }
+
+    let totalHTML = `<hr>
+                    <div class="d-flex justify-content-between">
+                        <h6>Total: </h6>
+                        <h6>${total}</h6>
+                    </div>
+                    <div class="d-flex justify-content-between mt-3">
+                                    <a href="{{ route('cart') }}" class="btn btn-primary btn-sm rounded-pill px-4">View Cart</a>
+                                    <a href="{{ route('checkout') }}" class="btn btn-secondary btn-sm rounded-pill px-4">Checkout</a>
+                    </div>
+                    `;
+    cartItem.innerHTML += totalHTML;
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    
-// document.getElementById('form'+id).addEventListener('submit', async (event) => {
-//     event.preventDefault();
-//     const id = document.getElementById('product-id').value;
-//     const name = document.getElementById('product-name').innerText;
-    
-//     const price = parseFloat(document.getElementById('product-price').innerText);
-//     const quantity = 3;
-//     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-//     const response = await fetch(`${apiBaseUrl}/add`, {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json',
-//             'X-CSRF-TOKEN': csrfToken,
-//          },
-//         body: JSON.stringify({ id, name, price, quantity }),
-//         mode: 'cors',
-//     });
-
-//     const result = await response.json();
-//     alert(result.message);
-//     loadCart();
-// });
-
-
-
 let forms = document.querySelectorAll('#ProductForms');
 forms.forEach(form => {
     form.addEventListener('submit', async (event) => {
@@ -287,8 +272,10 @@ forms.forEach(form => {
         // Lấy ID từ chính form hiện tại
         const id = form.querySelector('#product-id').value;
         const name = form.querySelector('#product-name').innerText;
-        const price = parseFloat(form.querySelector('#product-price').innerText);
-        const quantity = 3;
+        let priceProduct = form.querySelector('#product-price').innerText
+        const price = parseInt(priceProduct.replace("VNĐ","").replace(/,/g,"").trim());
+        const hinh =form.querySelector('#product-hinh').src ;
+        const quantity = 1;
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         // Gửi yêu cầu tới API
@@ -298,14 +285,82 @@ forms.forEach(form => {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': csrfToken,
             },
-            body: JSON.stringify({ id, name, price, quantity }),
+            body: JSON.stringify({ id, name, price, quantity, hinh }),
             mode: 'cors',
         });
 
         const result = await response.json();
-        alert(result.message);
+        showSuccessToast(result.message);
         loadCart();
     });
 });
 });
 
+
+
+// Toast Message
+function toast({
+    title = '',
+    message = '',
+    type = 'info',
+    duration = 3000}){
+    const main = document.getElementById('toast');
+    if(main){
+        const toast = document.createElement('div');
+        //Auto remove toast
+        main.appendChild(toast);
+        const AutoRemoveId = setTimeout(function(){
+            main.removeChild(toast);
+        },duration + 1000)
+
+        // Remove when click
+        toast.onclick = function(e){
+            if(e.target.closest('.toast__close')){
+                main.removeChild(toast);
+                clearTimeout(AutoRemoveId);
+            }
+        }
+
+
+        const icons = {
+            success : 'fas fa-check-circle',
+            info : 'fas fa-info-circle',
+            warning : 'fas fa-exclamation-circle',
+            error : 'fas fa-exclamation-circle'
+        };
+        const icon = icons[type];
+        const delay = (duration / 1000).toFixed(2);
+        toast.classList.add('toast',`toast--${type}`);
+        toast.style.animation = `slideInLeft ease .3s, fadeOut linear 1s ${delay}s forwards`;
+        toast.innerHTML = `
+            <div class="toast__icon">
+                <i class="${icon}"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">${title}</h3>
+                <p class="toast__msg">${message}</p>
+            </div>
+            <div class="toast__close">
+                <i class="fa-regular fa-circle-xmark"></i>
+            </div>` ;
+
+    }
+}
+
+function showSuccessToast($message){
+    toast({
+        title: 'Thành công',
+        message:$message,
+        type : 'success',
+        duration : 5000
+    });
+}
+
+function showErrorToast(){
+    toast({
+        title: 'Thất bại',
+        message:'Có lỗi xảy ra vui lòng thử lại',
+        type : 'error',
+        duration : 5000
+    });
+}
