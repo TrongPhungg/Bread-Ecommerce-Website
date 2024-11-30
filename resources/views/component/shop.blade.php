@@ -73,6 +73,7 @@
                                                 <meta name="csrf-token" content="{{ csrf_token() }}">
                                             @csrf
                                             <input  type="text" value={{$v->IDSanpham}} id="product-id" hidden>
+                                            <input  type="text" value={{$IDKh ?? ""}} id="customer-id" hidden>
                                             <a href="{{ route('detail', $v->IDSanpham) }}">
                                             <div class="fruite-img">
                                                 <img src="{{ asset('assets/img/'.$v->Hinh) }}" id="product-hinh" class="img-fluid w-100 rounded-top" alt="">

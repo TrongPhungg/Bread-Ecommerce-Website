@@ -221,8 +221,11 @@ if(searchClick){
 })
 }
 
+
+
 //API Cart
 const apiBaseUrl = 'http://127.0.0.1:8000/api';
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 async function loadCart(){
     const response = await fetch(apiBaseUrl);
     const cart = await response.json();
@@ -230,10 +233,11 @@ async function loadCart(){
     const cartItem = document.getElementById('cart-item');
     cartItem.innerHTML = '';
     let total = 0;
+    let dem = 0;
     for (let id in cart) {
         const item = cart[id];
         let itemHTML= `<div class="cart-item d-flex align-items-center mb-3">
-                                    <img src="${item.hinh}" class="img-fluid rounded-circle" style="width: 50px;" alt="">
+                                    <img src="http://127.0.0.1:8000/assets/img/${item.hinh}" class="img-fluid rounded-circle" style="width: 50px;" alt="">
                                     <div class="ms-3">
                                         <h6 class="mb-0">${item.name}</h6>
                                         <div class="d-flex justify-content-between">
@@ -241,27 +245,81 @@ async function loadCart(){
                                             <span class="text-secondary ms-3">x ${item.quantity}</span>
                                         </div>
                                     </div>
-                                    <button class="btn btn-sm text-danger ms-auto remove-item">
-                                        <i class="fas fa-times"></i>
-                                    </button>
+                                <button class="btn btn-sm text-danger ms-auto remove-item ">
+                                    <input type="hidden" value="${item.id}" id="item-id"/>
+                                    <a href="#" onclick="handleDelete(event)"><i class="fas fa-times"></i></a>
+                                </button>
+
                                 </div>
                                 `;
         cartItem.innerHTML += itemHTML;
         total += item.price*item.quantity;
+        dem++;
+    }
+    document.getElementById('total').innerHTML=`<h6>Total:</h6>
+                                    <h6>${total}</h6>`;
+    document.getElementById('slsp').innerText=dem;
+}
+
+async function loadListCart() {
+    const response = await fetch(apiBaseUrl);
+    const cart = await response.json();
+
+    const cartItem = document.getElementById('listCart');
+    cartItem.innerHTML = '';
+    let total = 0;
+    let dem = 0;
+    for (let id in cart) {
+        const item = cart[id];
+        let itemHTML= `<tr>
+                                <td scope="row">
+                                    <div class="d-flex align-items-center">
+                                        <input type="hidden" value="${item.id}" id="item-id"/>
+                                        <img src="http://127.0.0.1:8000/assets/img/${item.hinh}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                                    </div>
+                                </td>
+                                <td>
+                                    <p class="mb-0 mt-4">${item.name}</p>
+                                </td>
+                                <td>
+                                    <p class="mb-0 mt-4">${item.price}</p>
+                                </td>
+                                <td>
+                                    <div class="input-group quantity mt-4" style="width: 100px;">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
+                                            <i class="fa fa-minus"></i>
+                                            </button>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm text-center border-0" value="${item.quantity}">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p class="mb-0 mt-4">${item.price*item.quantity}</p>
+                                </td>
+                                <td>
+                                    <button class="btn btn-md rounded-circle bg-light border mt-4">
+                                        <a onclick="handleDelete(event)"><i class="fa fa-times text-danger"></i></a>
+                                    </button>
+                                </td>  
+                            </tr>
+                                `;
+        cartItem.innerHTML += itemHTML;
+        total += item.price*item.quantity;
+        dem++;
     }
 
-    let totalHTML = `<hr>
-                    <div class="d-flex justify-content-between">
-                        <h6>Total: </h6>
-                        <h6>${total}</h6>
-                    </div>
-                    <div class="d-flex justify-content-between mt-3">
-                                    <a href="{{ route('cart') }}" class="btn btn-primary btn-sm rounded-pill px-4">View Cart</a>
-                                    <a href="{{ route('checkout') }}" class="btn btn-secondary btn-sm rounded-pill px-4">Checkout</a>
-                    </div>
-                    `;
-    cartItem.innerHTML += totalHTML;
+    let subTotal = document.getElementById("subTotal");
+    subTotal.innerHTML=`<h5 class="mb-0 me-4">Subtotal:</h5>
+                                    <p class="mb-0">${total}</p>`
 }
+
+//AddCart API
 
 document.addEventListener('DOMContentLoaded', function() {
 let forms = document.querySelectorAll('#ProductForms');
@@ -271,12 +329,14 @@ forms.forEach(form => {
 
         // Lấy ID từ chính form hiện tại
         const id = form.querySelector('#product-id').value;
+        // const idKH = form.querySelector('#customer-id').value;
         const name = form.querySelector('#product-name').innerText;
         let priceProduct = form.querySelector('#product-price').innerText
         const price = parseInt(priceProduct.replace("VNĐ","").replace(/,/g,"").trim());
-        const hinh =form.querySelector('#product-hinh').src ;
+        const image =form.querySelector('#product-hinh').src ;
+        let hinh = image.split('/').pop();
         const quantity = 1;
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        
 
         // Gửi yêu cầu tới API
         const response = await fetch(`${apiBaseUrl}/add`, {
@@ -290,77 +350,118 @@ forms.forEach(form => {
         });
 
         const result = await response.json();
-        showSuccessToast(result.message);
+        alert(result.message);
         loadCart();
     });
 });
 });
 
 
+//Delete API
+function handleDelete(event) {
+    event.preventDefault(); 
 
-// Toast Message
-function toast({
-    title = '',
-    message = '',
-    type = 'info',
-    duration = 3000}){
-    const main = document.getElementById('toast');
-    if(main){
-        const toast = document.createElement('div');
-        //Auto remove toast
-        main.appendChild(toast);
-        const AutoRemoveId = setTimeout(function(){
-            main.removeChild(toast);
-        },duration + 1000)
+    
+    const id = document.getElementById('item-id').value;
 
-        // Remove when click
-        toast.onclick = function(e){
-            if(e.target.closest('.toast__close')){
-                main.removeChild(toast);
-                clearTimeout(AutoRemoveId);
+    if (confirm('Bạn có chắc chắn muốn xóa?')) {
+        fetch(`/api/delete/${id}`, {
+            method: 'DELETE',
+            headers: {
+                // 'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken // Laravel CSRF Token
             }
-        }
+        })
 
-
-        const icons = {
-            success : 'fas fa-check-circle',
-            info : 'fas fa-info-circle',
-            warning : 'fas fa-exclamation-circle',
-            error : 'fas fa-exclamation-circle'
-        };
-        const icon = icons[type];
-        const delay = (duration / 1000).toFixed(2);
-        toast.classList.add('toast',`toast--${type}`);
-        toast.style.animation = `slideInLeft ease .3s, fadeOut linear 1s ${delay}s forwards`;
-        toast.innerHTML = `
-            <div class="toast__icon">
-                <i class="${icon}"></i>
-            </div>
-            <div class="toast__body">
-                <h3 class="toast__title">${title}</h3>
-                <p class="toast__msg">${message}</p>
-            </div>
-            <div class="toast__close">
-                <i class="fa-regular fa-circle-xmark"></i>
-            </div>` ;
-
+        .then(response => {
+            if (response.ok) {
+                alert('Xóa thành công!');
+                loadCart();
+                loadListCart();
+            } else {
+                return response.json().then(data => {
+                    alert(`Lỗi: ${data.message || 'Không thể xóa.'}`);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Lỗi:', error);
+            alert('Đã xảy ra lỗi khi gửi yêu cầu.');
+        });
     }
 }
+// loadListCart();
+loadCart();
 
-function showSuccessToast($message){
-    toast({
-        title: 'Thành công',
-        message:$message,
-        type : 'success',
-        duration : 5000
-    });
-}
 
-function showErrorToast(){
-    toast({
-        title: 'Thất bại',
-        message:'Có lỗi xảy ra vui lòng thử lại',
-        type : 'error',
-        duration : 5000
-    });
-}
+
+// Toast Message
+// function toast({
+//     title = '',
+//     message = '',
+//     type = 'info',
+//     duration = 3000}){
+//     const main = document.getElementById('toast');
+//     if(main){
+//         const toast = document.createElement('div');
+//         //Auto remove toast
+//         main.appendChild(toast);
+//         const AutoRemoveId = setTimeout(function(){
+//             main.removeChild(toast);
+//         },duration + 1000)
+
+//         // Remove when click
+//         toast.onclick = function(e){
+//             if(e.target.closest('.toast__close')){
+//                 main.removeChild(toast);
+//                 clearTimeout(AutoRemoveId);
+//             }
+//         }
+
+
+//         const icons = {
+//             success : 'fas fa-check-circle',
+//             info : 'fas fa-info-circle',
+//             warning : 'fas fa-exclamation-circle',
+//             error : 'fas fa-exclamation-circle'
+//         };
+//         const icon = icons[type];
+//         const delay = (duration / 1000).toFixed(2);
+//         toast.classList.add('toast',`toast--${type}`);
+//         toast.style.animation = `slideInLeft ease .3s, fadeOut linear 1s ${delay}s forwards`;
+//         toast.innerHTML = `
+//             <div class="toast__icon">
+//                 <i class="${icon}"></i>
+//             </div>
+//             <div class="toast__body">
+//                 <h3 class="toast__title">${title}</h3>
+//                 <p class="toast__msg">${message}</p>
+//             </div>
+//             <div class="toast__close">
+//                 <i class="fa-regular fa-circle-xmark"></i>
+//             </div>` ;
+
+//     }
+// }
+
+// function showSuccessToast($message){
+//     toast({
+//         title: 'Thành công',
+//         message:$message,
+//         type : 'success',
+//         duration : 5000
+//     });
+// }
+
+// function showErrorToast(){
+//     toast({
+//         title: 'Thất bại',
+//         message:'Có lỗi xảy ra vui lòng thử lại',
+//         type : 'error',
+//         duration : 5000
+//     });
+// }
+
+
+// if(document.getElementById("listCart"))
