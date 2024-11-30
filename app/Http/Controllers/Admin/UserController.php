@@ -40,7 +40,8 @@ class UserController extends Controller
                 'id' => 'required|unique:users',
                 'email' => 'required|email:rfc,dns|regex:/^[a-zA-Z0-9]+@.*$/|unique:users',
                 'password' => 'required|min:3',
-                'role' => 'required|in:0,1'
+                'role' => 'required|in:0,1',
+                'IDkhachhang' => 'nullable|exists:khachhang,IDKhachhang'
             ], $messages);
 
             $user = new User();

@@ -1,4 +1,5 @@
 <div class="main-header">
+  
     <div class="main-header-logo">
       <!-- Logo Header -->
       <div class="logo-header" data-background-color="dark">
@@ -336,7 +337,7 @@
               </div>
               <span class="profile-username">
                 <span class="op-7">Hi,</span>
-                <span class="fw-bold">Hizrian</span>
+                <span class="fw-bold">{{Auth::user()->role == 1 ? 'Admin' : 'User'}}</span>
               </span>
             </a>
             <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -351,23 +352,16 @@
                       />
                     </div>
                     <div class="u-text">
-                      <h4>Hizrian</h4>
-                      <p class="text-muted">hello@example.com</p>
+                      <p class="text-muted">{{Auth::user()->email}}</p>
                       <a
                         href="profile.html"
                         class="btn btn-xs btn-secondary btn-sm"
-                        >View Profile</a
+                        >Thông tin tài khoản</a
                       >
                     </div>
                   </div>
                 </li>
                 <li>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">My Profile</a>
-                  <a class="dropdown-item" href="#">My Balance</a>
-                  <a class="dropdown-item" href="#">Inbox</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Account Setting</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{{route('auth.logout')}}">Logout</a>
                 </li>

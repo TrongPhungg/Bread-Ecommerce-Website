@@ -4,7 +4,7 @@
         <!-- Fruits Shop Start-->
         <div class="container-fluid fruite py-5">
             <div class="container py-5">
-                <h1 class="mb-4">Fresh fruits shop</h1>
+                <h1 class="mb-4">Bánh Mì Shop</h1>
                 <div class="row g-4">
                     <div class="col-lg-12">
                         <div class="row g-4">
@@ -55,9 +55,6 @@
                                     <div class="col-lg-12">
                                         <div class="position-relative">
                                             <img src="{{ asset('assets/img/banner-fruits.jpg') }}" class="img-fluid w-100 rounded" alt="">
-                                            <div class="position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
-                                                <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -73,7 +70,6 @@
                                                 <meta name="csrf-token" content="{{ csrf_token() }}">
                                             @csrf
                                             <input  type="text" value={{$v->IDSanpham}} id="product-id" hidden>
-                                            <input  type="text" value={{$IDKh ?? ""}} id="customer-id" hidden>
                                             <a href="{{ route('detail', $v->IDSanpham) }}">
                                             <div class="fruite-img">
                                                 <img src="{{ asset('assets/img/'.$v->Hinh) }}" id="product-hinh" class="img-fluid w-100 rounded-top" alt="">
