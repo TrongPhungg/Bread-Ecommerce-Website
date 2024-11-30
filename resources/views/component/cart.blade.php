@@ -7,6 +7,7 @@
             <div class="container py-5">
                 <div class="table-responsive">
                     <table class="table">
+                        <meta name="csrf-token" content="{{ csrf_token() }}">
                         <thead>
                           <tr>
                             <th scope="col">Products</th>
@@ -17,13 +18,13 @@
                             <th scope="col">Handle</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="listCart">
                             <tr>
-                                <th scope="row">
+                                <td scope="row">
                                     <div class="d-flex align-items-center">
                                         <img src="{{ asset('assets/img/vegetable-item-3.png') }}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
                                     </div>
-                                </th>
+                                </td>
                                 <td>
                                     <p class="mb-0 mt-4">Big Banana</p>
                                 </td>
@@ -52,8 +53,7 @@
                                     <button class="btn btn-md rounded-circle bg-light border mt-4" >
                                         <i class="fa fa-times text-danger"></i>
                                     </button>
-                                </td>
-                            
+                                </td>  
                             </tr>
                         </tbody>
                     </table>
@@ -68,7 +68,7 @@
                         <div class="bg-light rounded">
                             <div class="p-4">
                                 <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
-                                <div class="d-flex justify-content-between mb-4">
+                                <div class="d-flex justify-content-between mb-4" id="subTotal">
                                     <h5 class="mb-0 me-4">Subtotal:</h5>
                                     <p class="mb-0">$96.00</p>
                                 </div>
@@ -84,7 +84,12 @@
                                 <h5 class="mb-0 ps-4 me-4">Total</h5>
                                 <p class="mb-0 pe-4">$99.00</p>
                             </div>
-                            <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
+                            <a href={{route('checkout')}}>
+                                <button 
+                                class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" 
+                                type="button">Proceed Checkout
+                                </button>
+                            </a>
                         </div>
                     </div>
                 </div>
