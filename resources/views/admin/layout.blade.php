@@ -49,7 +49,7 @@
 
       <div class="main-panel">
         @include('admin.component.header')
-
+        
         @if(isset($template) && view()->exists($template))
           @include($template)
         @else

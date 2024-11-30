@@ -23,6 +23,9 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\PrivacyController;
+
 
 Route::get('/', [TrangchuController::class,'index']
 )->name('trangchu');
@@ -169,12 +172,27 @@ Route::get('content', [ContentController::class, 'index'])
 Route::get('news', [NewsController::class, 'index'])
 ->name('news');
 
-//Customer
+//Profile
 Route::get('profile', [ProfileController::class, 'index'])
 ->name('profile')
 ->middleware(AuthenticateMiddleware::class);
+//edit
+Route::get('profile/edit/{id}', [ProfileController::class, 'update'])
+->name('profile.update');
+Route::put('profile/{id}', [ProfileController::class, 'handleupdate'])
+->name('profile.handleupdate');
 
 
+
+//Register
+Route::get('register', [RegisterController::class, 'index'])
+->name('register');
+Route::post('register', [RegisterController::class, 'handlecreate'])
+->name('register.post');
+
+//Privacy
+Route::get('privacy', [PrivacyController::class, 'index'])
+->name('privacy');
 
 
 //API giỏ hàng

@@ -28,7 +28,6 @@ class CustomerController extends Controller
                     'Gioitinh' => $request->input('Gioitinh'),
                     'Ngaysinh' => $request->input('Ngaysinh'),
                     'Sodienthoai' => $request->input('Sodienthoai'),
-                    'Email' => $request->input('Email'),
                     'Diachi' => $request->input('Diachi')
                 ]);
         return redirect('/customer');

@@ -16,8 +16,8 @@
                 <div class="login-box">
                     <div class="text-center">
                         <h1 class="login-logo text-center d-flex justify-content-center align-items-center">PB</h1>
-                        <h3 class="login-welcome text-center d-flex justify-content-center align-items-center">Welcome to Bánh Mì PB</h3>
-                        <p class="text-muted mb-4 login-welcome text-center d-flex justify-content-center align-items-center">Vui lòng đăng nhập để đặt đơn hàng!</p>
+                        <h3 class="login-welcome text-center d-flex justify-content-center align-items-center">Welcome to Bread PB</h3>
+                        <p class="text-muted mb-4 login-welcome text-center d-flex justify-content-center align-items-center">Please login to place an order!</p>
 
                         @if(session('login_error'))
                             <script>
@@ -34,6 +34,20 @@
                             </script>
                         @endif
 
+
+                        @if(session('res_success'))
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    Swal.fire({
+                                        title: 'Thành công!',
+                                        text: '{{ session('res_success') }}',
+                                        icon: 'success',
+                                        showCloseButton: true,
+                                        timer: 3500
+                                    });
+                                });
+                            </script>
+                        @endif
                         <form class="login-form" role="form" 
                         action="{{route('auth.login')}}" 
                         method="POST">
@@ -66,8 +80,8 @@
                             <button type="submit" class="login-btn">Đăng nhập</button>
                             
                             <div class="login-links">
-                                <a href="#" class="login-link d-block mb-2">Forgot password?</a>
                                 <p class="text-muted mb-2">Don't have an account?</p>
+                                <a href="{{ route('register') }}" class="login-link d-block mb-2">Sign up</a>
                             </div>
                         </form>
                     </div>

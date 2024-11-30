@@ -24,14 +24,14 @@
         <table class="mt-3 table table-hover">
             <tr>
                 <td>Tên sản phẩm</td>
-                <td>Mô tả</td>
+                <td>Số điện thoại</td>
                 <td></td>
                 <td></td>
             </tr>
             @foreach($data as $v)
             <tr>
                 <td>{{$v->TenKhachhang}}</td>
-                <td>{{$v->Email}}</td>
+                <td>{{$v->Sodienthoai}}</td>
                 <td>
                     <form action="{{route('customer.update',$v->IDKhachhang)}}" method="POST"
                         style="display: inline;">

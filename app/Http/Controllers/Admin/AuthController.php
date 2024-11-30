@@ -14,10 +14,10 @@ class AuthController extends Controller
         if (Auth::check()) {
             // Nếu là user thường (role = 0) thì chuyển về trang chủ
             if (Auth::user()->role == 0) {
-                return redirect('/');
+                return redirect('/')->with('login_success', 'Đăng nhập thành công!');
             }
             // Nếu là admin (role = 1) thì chuyển về dashboard
-            return redirect('dashboard');
+            return redirect('dashboard')->with('login_success', 'Đăng nhập thành công!');
         }
         return view('admin.auth.login');
     }
