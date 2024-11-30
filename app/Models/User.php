@@ -23,7 +23,7 @@ class User extends Authenticatable
         'role',
         'remember_token',
         'email_verified_at',
-        'IDkhachhang'
+        'IDKhachhang'
     ];
 
     /**

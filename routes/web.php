@@ -156,7 +156,7 @@ Route::get('shop', [ShopController::class, 'index'])
 Route::get('shopdetail', [ShopdetailController::class, 'index'])
 ->name('shopdetail');
 //Cart
-Route::get('cart', [CartController::class, 'index'])
+Route::get('cart', [CartController::class, 'showCart'])
 ->name('cart');
 //Checkout
 Route::get('checkout', [CheckoutController::class, 'index'])
@@ -205,5 +205,5 @@ Route::prefix('api')->group(function(){
     Route::get('/',[CartController::class,'index']);
     Route::any('/add',[CartController::class,'add']);
     Route::put('/update',[CartController::class,'update']);
-    Route::delete('/delete',[CartController::class,'delete']);
+    Route::delete('/delete/{id}',[CartController::class,'delete']);
 });

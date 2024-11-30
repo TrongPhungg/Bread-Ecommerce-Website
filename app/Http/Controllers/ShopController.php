@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\sanpham;
 use App\Models\loaisanpham;
-
+use Illuminate\Support\Facades\Auth;
 
 class ShopController extends Controller
 {
