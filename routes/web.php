@@ -164,7 +164,8 @@ Route::get('checkout', [CheckoutController::class, 'index'])
 //Contact
 Route::get('contact', [ContactController::class, 'index'])
 ->name('contact');
-
+Route::post('contact/send', [ContactController::class, 'send'])
+->name('contact.send');
 //Content
 Route::get('content', [ContentController::class, 'index'])
 ->name('content');
