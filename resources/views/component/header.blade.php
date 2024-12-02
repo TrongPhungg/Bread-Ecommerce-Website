@@ -40,47 +40,41 @@
                     </div>
 
                     <div class="me-4">
-                        <div class="position-relative" onmouseover="loadCart()">
+                        <div class="position-relative">
                             <a href="#" class="cart-icon">
-                                <i class="fa fa-shopping-bag fa-2x"></i>
-                                <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;"></span>
+                                <i class="fa fa-shopping-bag fa-2x" onmouseover="loadCart()"></i>
+                                <span id="slsp" class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;"></span>
                             </a>
-                            <div class="cart-hover-content position-absolute bg-white shadow p-3" style="width: 300px; right: 0; top: 100%; display: none; z-index: 1000; border-radius: 20px;" id="cart-item">
-                                <div class="cart-item d-flex align-items-center mb-3">
-                                    <img src="{{ asset('assets/img/vegetable-item-3.png') }}" class="img-fluid rounded-circle" style="width: 50px;" alt="">
-                                    <div class="ms-3">
-                                        <h6 class="mb-0">Product Name</h6>
-                                        <div class="d-flex justify-content-between">
-                                            <span class="text-primary">$2.99</span>
-                                            <span class="text-secondary ms-3">x 1</span>
+                            <div class="cart-hover-content position-absolute bg-white shadow p-3" style="width: 300px; right: 0; top: 100%; display: none; z-index: 1000; border-radius: 20px;">
+                            <div id="cart-item">
+                                <div class="cart-item d-flex align-items-center mb-3" >
+                                    <div>
+                                        <img src="{{ asset('assets/img/vegetable-item-3.png') }}" class="img-fluid rounded-circle" style="width: 50px;" alt="">
+                                        <div class="ms-3">
+                                            <h6 class="mb-0">Product Name</h6>
+                                            <div class="d-flex justify-content-between">
+                                                <span class="text-primary">$2.99</span>
+                                                <span class="text-secondary ms-3">x 1</span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <button class="btn btn-sm text-danger ms-auto remove-item">
-                                        <i class="fas fa-times"></i>
-                                    </button>
                                 </div>
-                                <div class="cart-item d-flex align-items-center mb-3">
-                                    <img src="{{ asset('assets/img/vegetable-item-3.png') }}" class="img-fluid rounded-circle" style="width: 50px;" alt="">
-                                    <div class="ms-3">
-                                        <h6 class="mb-0">Product Name</h6>
-                                        <div class="d-flex justify-content-between">
-                                            <span class="text-primary">$2.99</span>
-                                            <span class="text-secondary ms-3">x 2</span>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-sm text-danger ms-auto remove-item">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
+                            </div>
+                            {{-- <div>
+                                <button class="btn btn-sm text-danger ms-auto remove-item ">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div> --}}
+                            <div>
                                 <hr>
-                                <div class="d-flex justify-content-between">
-                                    <h6>Total:</h6>
-                                    <h6>$8.97</h6>
+                                <div class="d-flex justify-content-between" id="total">
+                                
                                 </div>
-                                <!-- <div class="d-flex justify-content-between mt-3">
+                                <div class="d-flex justify-content-between mt-3">
                                     <a href="{{ route('cart') }}" class="btn btn-primary btn-sm rounded-pill px-4">View Cart</a>
                                     <a href="{{ route('checkout') }}" class="btn btn-secondary btn-sm rounded-pill px-4">Checkout</a>
-                                </div> -->
+                                </div>
+                            </div>
                             </div>
                         </div>
                     </div>

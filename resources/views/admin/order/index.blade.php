@@ -30,9 +30,16 @@
                 <td></td>
             </tr>
             @foreach($data as $v)
+            @if($v->Trangthaidh != "")
             <tr>
                 <td>{{$v->IDDonhang}}</td>
-                <td>{{$v->TenKhachhang}}</td>
+                <td>
+                  @foreach($dskh as $kh)
+                  @if($kh->IDKhachhang == $v->IDKhachhang)
+                      {{$kh->TenKhachhang}}
+                  @endif
+                  @endforeach
+                </td>
                 <td>{{\Carbon\Carbon::parse($v->Ngaylapdh)->format('d/m/Y')}}</td>
                 <td>
                   @switch($v->Trangthaidh)
@@ -64,6 +71,7 @@
                     </form>
                 </td>
             </tr>
+            @endif
             @endforeach
           </table>
          <div>

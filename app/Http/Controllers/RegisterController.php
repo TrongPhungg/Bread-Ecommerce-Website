@@ -57,7 +57,6 @@ class RegisterController extends Controller
             $user->role = 0;
             $user->IDKhachhang = $khachhang->IDKhachhang;
             $user->save();
-
             DB::beginTransaction();
             return redirect('/adminz') ->with('res_success', 'Đăng ký thành công!');
         } catch (Exception $e) {

@@ -15,14 +15,17 @@ class OrderController extends Controller
     public function index(){
         $template = 'admin.order.index';
         $data = donhang::all();
+        $dskh = khachhang::all();
         $data = donhang ::paginate(5);
-        return view('admin.layout',compact('template','data'));
+        return view('admin.layout',compact('template','data','dskh'));
     }
 
     public function detail($id){
         $template = 'admin.order.detail';
-        $data = chitietdonhang::where('IDDonhang',$id)->get();
+        $data = chitietdonhang::where('IDDonhang',$id)
+                                ->get();
         $dssp = sanpham::all();
+        
         $dh = donhang::where('IDDonhang',$id)->first();
         $n = $data->count();
         // dd($data);

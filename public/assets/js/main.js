@@ -225,7 +225,7 @@ if(searchClick){
 
 //API Cart
 const apiBaseUrl = 'http://127.0.0.1:8000/api';
-const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
 async function loadCart(){
     const response = await fetch(apiBaseUrl);
     const cart = await response.json();
@@ -319,6 +319,9 @@ async function loadListCart() {
                                     <p class="mb-0">${total}</p>`
 }
 
+document.getElementById
+
+
 //AddCart API
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -326,7 +329,7 @@ let forms = document.querySelectorAll('#ProductForms');
 forms.forEach(form => {
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
-
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         // Lấy ID từ chính form hiện tại
         const id = form.querySelector('#product-id').value;
         // const idKH = form.querySelector('#customer-id').value;
@@ -335,7 +338,11 @@ forms.forEach(form => {
         const price = parseInt(priceProduct.replace("VNĐ","").replace(/,/g,"").trim());
         const image =form.querySelector('#product-hinh').src ;
         let hinh = image.split('/').pop();
-        const quantity = 1;
+        let quantity;
+        if(form.querySelector('#product-quantity'))
+            quantity = form.querySelector('#product-quantity').value;
+        else 
+            quantity = 1;
         
 
         // Gửi yêu cầu tới API
@@ -360,7 +367,7 @@ forms.forEach(form => {
 //Delete API
 function handleDelete(event) {
     event.preventDefault(); 
-
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     
     const id = document.getElementById('item-id').value;
 
@@ -378,7 +385,6 @@ function handleDelete(event) {
             if (response.ok) {
                 alert('Xóa thành công!');
                 loadCart();
-                loadListCart();
             } else {
                 return response.json().then(data => {
                     alert(`Lỗi: ${data.message || 'Không thể xóa.'}`);
@@ -392,7 +398,7 @@ function handleDelete(event) {
     }
 }
 // loadListCart();
-loadCart();
+// loadCart();
 
 
 
