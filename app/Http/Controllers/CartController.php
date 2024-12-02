@@ -22,56 +22,66 @@ class CartController extends Controller
 
     public function index()
     {
-            $cart = session()->get('cart', new \stdClass()); 
+        $cart = session()->get('cart', new \stdClass()); 
+
+        if (empty((array)$cart)) { 
             if (Auth::user()) {
                 $user_id = Auth::user()->IDKhachhang;
-                $dskh = khachhang::all();
                 $dh = donhang::where('IDKhachhang', $user_id)
-                             ->where('trangthaidh',"")
-                             ->first();
-        
-                if (!$dh) {
-                    $dh = new donhang();
-                    $dh->IDKhachhang = $user_id;
-                    $dh->Ngaylapdh =now();
-                    $dh->Tongtien = 0; 
-                    $dh->trangthaidh = '';  
-                    $dh->save();
-                }
-                if ($dh) {
-                    $data = chitietdonhang::where('IDDonhang', $dh->IDDonhang)->get();
-                    $dataFormatted = $data->mapWithKeys(function ($item) {
-                        $sp = sanpham::where('IDSanpham', $item->IDSanpham)->first();
-                        return [
-                            $item->IDSanpham => (object) [
-                                'id' => $item->IDSanpham,
-                                'name' => $sp->Tensanpham,
-                                'price' => $item->Dongia,
-                                'quantity' => $item->Soluongsp,
-                                'hinh' => $sp->Hinh,
-                            ]
-                        ];
-                    })->toArray();
-                    foreach ($dataFormatted as $key => $value) {
-                        $cart->{$key} = $value; 
-                    }
-                }
-                foreach ($cart as $item) {
-                    DB::table('chitietdonhang')->updateOrInsert(
+                                    ->where('trangthaidh','')
+                                    ->first();
+
+        if ($dh) {
+            $data = chitietdonhang::where('IDDonhang', $dh->IDDonhang)->get();
+            $dataFormatted = $data->mapWithKeys(function ($item) {
+                $sp = sanpham::where('IDSanpham', $item->IDSanpham)->first();
+                return [
+                    $item->IDSanpham => (object) [
+                        'id' => $item->IDSanpham,
+                        'name' => $sp->Tensanpham,
+                        'price' => $item->Dongia,
+                        'quantity' => $item->Soluongsp,
+                        'hinh' => $sp->Hinh,
+                    ]
+                ];
+            })->toArray();
+
+            foreach ($dataFormatted as $key => $value) {
+                $cart->{$key} = $value; 
+            }
+        } 
+    }
+} else {
+    if (Auth::user()) {
+        $user_id = Auth::user()->IDKhachhang;
+        $dh = donhang::where('IDKhachhang', $user_id)
+                     ->where('trangthaidh','')
+                     ->first();
+        if (!$dh) {
+            $dh = new donhang();
+            $dh->IDKhachhang = $user_id;
+	        $dh->Ngaylapdh= now();
+            $dh->trangthaidh = '';
+            $dh->Tongtien = 0;
+            $dh->save();
+        }
+        foreach ($cart as $item) {
+             DB::table('chitietdonhang')->updateOrInsert(
                             ['IDSanpham' => $item->id, 'IDDonhang' => $dh->IDDonhang], 
                             [
                                 'Dongia' => $item->price,
                                 'Soluongsp' => $item->quantity,
                             ]
                         );
-                }
-            }
-    
-    // Lưu giỏ hàng đã xử lý vào session
-    session()->put('cart', $cart);
-    
-    // Trả về giỏ hàng dạng JSON
-    return response()->json($cart);
+        }
+    }
+}
+
+// Lưu giỏ hàng đã xử lý vào session
+session()->put('cart', $cart);
+
+// Trả về giỏ hàng dạng JSON
+return response()->json($cart);
     }
 
 
@@ -102,20 +112,6 @@ class CartController extends Controller
 
     public function delete($id)
     {   
-        // $request->validate([
-        //     'id' => 'required|integer',
-        // ]);
-
-        // $cart = session()->get('cart', []);
-
-        // if (isset($cart[$id])) {
-        //     unset($cart[$id]);
-        //     session()->put('cart', $cart);
-
-        //     return response()->json(['message' => 'Product removed!', 'cart' => $cart]);
-        // }
-
-        // return response()->json(['message' => 'Product not found in cart.'], 404);
         $cart = session()->get('cart', new \stdClass());
 
     if (property_exists($cart, $id)) {

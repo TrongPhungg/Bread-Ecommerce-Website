@@ -319,7 +319,8 @@ async function loadListCart() {
                                     <p class="mb-0">${total}</p>`
 }
 
-document.getElementById
+if(document.getElementById('listCart'))
+    loadListCart();
 
 
 //AddCart API
@@ -385,6 +386,7 @@ function handleDelete(event) {
             if (response.ok) {
                 alert('Xóa thành công!');
                 loadCart();
+                
             } else {
                 return response.json().then(data => {
                     alert(`Lỗi: ${data.message || 'Không thể xóa.'}`);
@@ -396,9 +398,9 @@ function handleDelete(event) {
             alert('Đã xảy ra lỗi khi gửi yêu cầu.');
         });
     }
+    
 }
-// loadListCart();
-// loadCart();
+
 
 
 
