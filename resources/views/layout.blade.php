@@ -34,7 +34,7 @@
         <div id="toast">
         </div>
             @include('component.header')
-
+            <meta name="csrf-token" content="{{ csrf_token() }}">
             @include($template)
 
             @include('component.footer')
