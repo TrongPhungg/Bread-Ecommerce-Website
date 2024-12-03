@@ -33,10 +33,10 @@
             </tr>
             @foreach($data as $v)
                 <tr>
-                    <td>{{$v->Masanpham}}</td>
+                    <td>{{$v->IDSanpham}}</td>
                     <td>
                         @foreach($dssp as $b)
-                            @if($v->Masanpham == $b->IDSanpham)
+                            @if($v->IDSanpham == $b->IDSanpham)
                                 {{$b->Tensanpham}}
                             @endif
                         @endforeach

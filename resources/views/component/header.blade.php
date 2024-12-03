@@ -3,8 +3,8 @@
     <div class="container topbar bg-primary d-none d-lg-block">
         <div class="d-flex justify-content-between">
             <div class="top-info ps-2">
-                <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
-                <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
+                <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">68 thôn Mỹ Yên, Đức Minh, Đăk Mil, Đăk Nông.</a></small>
+                <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">trongphung020103@gmail.com</a></small>
             </div>
         </div>
     </div>
@@ -18,17 +18,16 @@
             </button>
             <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                 <div class="navbar-nav mx-auto">
-                    <a href="{{ route('trangchu') }}" class="nav-item nav-link {{ request()->routeIs('trangchu') ? 'active' : '' }}">Home</a>
-                    <a href="{{ route('shop') }}" class="nav-item nav-link {{ request()->routeIs('shop') ? 'active' : '' }}">Shop</a>
-                    <a href="{{ route('content') }}" class="nav-item nav-link {{ request()->routeIs('content') ? 'active' : '' }}">Content</a>
-                    <a href="{{ route('news') }}" class="nav-item nav-link {{ request()->routeIs('news') ? 'active' : '' }}">News</a>
+                    <a href="{{ route('trangchu') }}" class="nav-item nav-link {{ request()->routeIs('trangchu') ? 'active' : '' }}">Trang chủ</a>
+                    <a href="{{ route('shop') }}" class="nav-item nav-link {{ request()->routeIs('shop') ? 'active' : '' }}">Sản phẩm</a>
+                    <a href="{{ route('content') }}" class="nav-item nav-link {{ request()->routeIs('content') ? 'active' : '' }}">Giới thiệu</a>
+                    <a href="{{ route('news') }}" class="nav-item nav-link {{ request()->routeIs('news') ? 'active' : '' }}">Tin tức</a>
+                    <a href="{{ route('privacy') }}" class="nav-item nav-link {{ request()->routeIs('privacy') ? 'active' : '' }}">Chính sách</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle {{ request()->routeIs(['cart', 'checkout', 'testimonial']) ? 'active' : '' }}" data-bs-toggle="dropdown">Pages</a>
+                        <a href="#" class="nav-link dropdown-toggle {{ request()->routeIs(['cart', 'checkout', 'testimonial']) ? 'active' : '' }}" data-bs-toggle="dropdown">Trang</a>
                         <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                            <a href="{{ route('cart') }}" class="dropdown-item">Cart</a>
-                            <a href="{{ route('checkout') }}" class="dropdown-item">Checkout</a>
-                            <a href="{{ route('testimonial') }}" class="dropdown-item">Testimonial</a>
-                            <a href="404.html" class="dropdown-item">404 Page</a>
+                            <a href="{{ route('checkout') }}" class="dropdown-item">Thanh toán</a>
+                            <a href="{{ route('testimonial') }}" class="dropdown-item">Đánh giá</a>
                         </div>
                     </div>
                     <a href="{{ route('contact') }}" class="nav-item nav-link {{ request()->routeIs('contact') ? 'active' : '' }}">Contact</a>
@@ -44,20 +43,32 @@
                         <div class="position-relative">
                             <a href="#" class="cart-icon">
                                 <i class="fa fa-shopping-bag fa-2x" onmouseover="loadCart()"></i>
+<<<<<<< HEAD
                                 <span id="slsp" class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">1</span>
+=======
+                                <span id="slsp" class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;"></span>
+>>>>>>> 74552d279f6bb414e85f1699cd275d6819f3c5a8
                             </a>
                             <div class="cart-hover-content position-absolute bg-white shadow p-3" style="width: 300px; right: 0; top: 100%; display: none; z-index: 1000; border-radius: 20px;">
                             <div id="cart-item">
                                 <div class="cart-item d-flex align-items-center mb-3" >
+<<<<<<< HEAD
                                     <div>
                                         <img src="{{ asset('assets/img/vegetable-item-3.png') }}" class="img-fluid rounded-circle" style="width: 50px;" alt="">
                                         <div class="ms-3">
                                             <h6 class="mb-0">Product Name</h6>
+=======
+                                    {{-- <div>
+                                        <img src="{{ asset('assets/img/vegetable-item-3.png') }}" class="img-fluid rounded-circle" style="width: 50px;" alt="">
+                                        <div class="ms-3">
+                                            <h6 class="mb-0"></h6>
+>>>>>>> 74552d279f6bb414e85f1699cd275d6819f3c5a8
                                             <div class="d-flex justify-content-between">
                                                 <span class="text-primary">$2.99</span>
                                                 <span class="text-secondary ms-3">x 1</span>
                                             </div>
                                         </div>
+<<<<<<< HEAD
                                     </div>
                                 </div>
                             </div>
@@ -66,6 +77,12 @@
                                     <i class="fas fa-times"></i>
                                 </button>
                             </div> --}}
+=======
+                                    </div> --}}
+                                </div>
+                            </div>
+
+>>>>>>> 74552d279f6bb414e85f1699cd275d6819f3c5a8
                             <div>
                                 <hr>
                                 <div class="d-flex justify-content-between" id="total">
@@ -88,7 +105,7 @@
                             <div class="dropdown-menu dropdown-menu-end shadow-lg border-0" aria-labelledby="userDropdown" style="min-width: 250px; margin-top: 0.5rem; border-radius: 12px; overflow: hidden;">
                                 @auth
                                 <div class="px-3 py-3 text-muted small text-center border-bottom bg-light">
-                                    Xin chào!
+                                    Xin chào! {{ Auth::user()->email }}
                                 </div>
                                 <a class="dropdown-item py-3 px-4 d-flex align-items-center hover-bg-light" href="{{ route('profile') }}">
                                     <i class="fas fa-user-circle me-3 text-primary"></i>Thông tin</a>
@@ -101,6 +118,8 @@
                                 @else
                                 <a class="dropdown-item py-3 px-4 d-flex align-items-center hover-bg-light" href="{{ route('auth.admin') }}">
                                     <i class="fas fa-sign-in-alt me-3 text-primary"></i>Đăng nhập</a>
+                                <a class="dropdown-item py-3 px-4 d-flex align-items-center hover-bg-light" href="{{ route('register') }}">
+                                    <i class="fas fa-sign-in-alt me-3 text-primary"></i>Đăng ký</a>
                                 @endauth
                             </div>
                         </div>

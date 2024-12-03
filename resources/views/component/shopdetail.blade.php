@@ -6,19 +6,23 @@
   <div class="container-fluid py-5 mt-5">
             <div class="container py-5">
                 <div class="row g-4 mb-5">
-                    <div class="col-lg-8 col-xl-9">
+                    <div class="col-lg-8 col-xl-9" id="ProductForms" >
+                        <form id="form{{$product->IDSanpham}}">
                         <div class="row g-4">
+                                <meta name="csrf-token" content="{{ csrf_token() }}">
+                                @csrf
+                                <input  type="text" value={{$product->IDSanpham}} id="product-id" hidden>
                             <div class="col-lg-6">
                                 <div class="border rounded">
                                     <a href="#">
-                                        <img src="{{ asset('assets/img/'.$product->Hinh) }}" class="img-fluid rounded" alt="Image">
+                                        <img src="{{ asset('assets/img/'.$product->Hinh) }}" id="product-hinh" class="img-fluid rounded" alt="Image">
                                     </a>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <h4 class="fw-bold mb-3">{{$product->Tensanpham}}</h4>
+                                <h4 id="product-name" class="fw-bold mb-3">{{$product->Tensanpham}}</h4>
                                 <p class="mb-3">Category: Vegetables</p>
-                                <h5 class="fw-bold mb-3">{{number_format($product->Dongia,0,',',',').'VNĐ'}}</h5>
+                                <h5 id="product-price" class="fw-bold mb-3">{{number_format($product->Dongia,0,',',',').'VNĐ'}}</h5>
                                 <div class="d-flex mb-4">
                                     <i class="fa fa-star text-secondary"></i>
                                     <i class="fa fa-star text-secondary"></i>
@@ -29,19 +33,22 @@
                                 <p class="mb-4">{{$product->Motasanpham}}</p>
                                 <div class="input-group quantity mb-5" style="width: 100px;">
                                     <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
+                                        <button type="button" class="btn btn-sm btn-minus rounded-circle bg-light border" >
                                             <i class="fa fa-minus"></i>
                                         </button>
                                     </div>
-                                    <input type="text" class="form-control form-control-sm text-center border-0" value="1">
+                                    <input id="product-quantity" type="text" class="form-control form-control-sm text-center border-0" value="1">
                                     <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                        <button type="button" class="btn btn-sm btn-plus rounded-circle bg-light border">
                                             <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
-                                <a href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                <button type="submit" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary">
+                                    <i class="fa fa-shopping-bag me-2 text-primary">
+                                    </i> Add to cart</button>
                             </div>
+                            </form>
                             <div class="col-lg-12">
                                 <nav>
                                     <div class="nav nav-tabs mb-3">
@@ -107,12 +114,13 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
+                                        @foreach($danhgia as $d)
                                         <div class="d-flex">
                                             <img src="{{ asset('assets/img/avatar.jpg') }}" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
                                             <div class="">
-                                                <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
+                                                <p class="mb-2" style="font-size: 14px;">{{$d->Ngaydanhgia}}</p>
                                                 <div class="d-flex justify-content-between">
-                                                    <h5>Jason Smith</h5>
+                                                    <h5>{{$d->khachhang->TenKhachhang}}</h5>
                                                     <div class="d-flex mb-3">
                                                         <i class="fa fa-star text-secondary"></i>
                                                         <i class="fa fa-star text-secondary"></i>
@@ -121,28 +129,10 @@
                                                         <i class="fa fa-star"></i>
                                                     </div>
                                                 </div>
-                                                <p>The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic 
-                                                    words etc. Susp endisse ultricies nisi vel quam suscipit </p>
+                                                <p>{{$d->Danhgia}}</p>
                                             </div>
                                         </div>
-                                        <div class="d-flex">
-                                            <img src="{{ asset('assets/img/avatar.jpg') }}" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
-                                            <div class="">
-                                                <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
-                                                <div class="d-flex justify-content-between">
-                                                    <h5>Sam Peters</h5>
-                                                    <div class="d-flex mb-3">
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                </div>
-                                                <p class="text-dark">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic 
-                                                    words etc. Susp endisse ultricies nisi vel quam suscipit </p>
-                                            </div>
-                                        </div>
+                                        @endforeach
                                     </div>
                                     <div class="tab-pane" id="nav-vision" role="tabpanel">
                                         <p class="text-dark">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
@@ -194,6 +184,7 @@
                             <div class="col-lg-12">
                                 <h4 class="mb-4">Sản phẩm bán chạy</h4>
                                 @foreach($dssp as $sp)
+                                <a href="{{route('detail',$sp->IDSanpham)}}">
                                 <div class="d-flex align-items-center justify-content-start">
                                     <div class="rounded" style="width: 100px; height: 100px;">
                                         <img src="{{ asset('assets/img/'.$sp->Hinh) }}" class="img-fluid rounded" alt="Image">
@@ -213,6 +204,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                </a>
                                 @endforeach
                                 <div class="d-flex justify-content-center my-4">
                                     <a href="{{route('shop')}}" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">View More</a>

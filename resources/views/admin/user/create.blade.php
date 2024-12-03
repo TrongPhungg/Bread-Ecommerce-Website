@@ -45,7 +45,7 @@
 
                         <div class="form-group col-md-6">
                             <label>ID khách hàng</label>
-                            <input type="text" class="form-control" name="IDkhachhang" value="{{ old('IDkhachhang ') }}" required>
+                            <input type="text" class="form-control" name="IDkhachhang" value="{{ old('IDkhachhang ') }}">
                         </div>
 
                         <div class="form-group col-md-6">

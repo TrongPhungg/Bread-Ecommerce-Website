@@ -14,13 +14,13 @@
           </li>
           
           <li class="nav-item">
-            <a href="{{route('product.index')}}">Danh mục sản phẩm</a>
+            <a href="{{route('customer.index')}}">Danh sách khách hàng</a>
           </li>
           <li class="separator">
             <i class="icon-arrow-right"></i>
           </li>
           <li class="nav-item">
-            <a href="{{route('product.create')}}">Chỉnh sửa sản phẩm</a>
+            <a href="{{route('customer.update',$kh->IDKhachhang)}}">Chỉnh sửa khách hàng</a>
           </li>
         </ul>
       </div>
@@ -86,21 +86,6 @@
                      Nữ
                 </div>
                 </div>
-        </div>
-        <div class="form-group form-inline">
-            <label
-              for="inlineinput"
-              class="col-md-3 col-form-label"
-              >Email</label
-            >
-            <div class="col-md-9 p-0">
-              <input
-                type="text"
-                class="form-control input-full"
-                name="Email"
-                value={{$kh->Email}}
-              />
-            </div>
         </div>
         <div class="form-group form-inline">
             <label
