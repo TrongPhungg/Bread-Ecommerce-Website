@@ -10,6 +10,11 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Middleware\LoginMiddleware;
 use App\Http\Middleware\AuthenticateMiddleware;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ContentAdminController;
+use App\Http\Controllers\Admin\OpinionController;
+
 
 
 //user
@@ -98,6 +103,8 @@ Route::delete('customer/{id}', [CustomerController::class, 'delete'])
 ->middleware(AuthenticateMiddleware::class);
 
 
+
+
 //Order
 Route::get('order', [OrderController::class, 'index'])
 ->name('order.index')
@@ -158,9 +165,18 @@ Route::get('shopdetail', [ShopdetailController::class, 'index'])
 //Cart
 Route::get('cart', [CartController::class, 'showCart'])
 ->name('cart');
+
+
 //Checkout
 Route::get('checkout', [CheckoutController::class, 'index'])
-->name('checkout');
+->name('checkout')
+->middleware(AuthenticateMiddleware::class);
+Route::post('checkout/finish/{id}',[CheckoutController::class,'update'])
+->name('checkout.finish')
+->middleware(AuthenticateMiddleware::class);
+
+
+
 //Contact
 Route::get('contact', [ContactController::class, 'index'])
 ->name('contact');
@@ -182,6 +198,67 @@ Route::get('profile/edit/{id}', [ProfileController::class, 'update'])
 Route::put('profile/{id}', [ProfileController::class, 'handleupdate'])
 ->name('profile.handleupdate');
 
+//Review
+Route::get('review',[ReviewController::class,'index'])
+->name('review')
+->middleware(AuthenticateMiddleware::class);
+Route::delete('category/delete/{id}', [ReviewController::class, 'delete'])
+        ->name('review.delete')
+->middleware(AuthenticateMiddleware::class);
+
+Route::get('review/update/{id}', [ReviewController::class, 'update'])
+->name('update')
+->middleware(AuthenticateMiddleware::class);
+
+
+Route::post('review/create', [ShopdetailController::class, 'handlecreate'])
+->name('handlecreate')
+->middleware(AuthenticateMiddleware::class);
+
+
+
+//Category
+Route::get('category',[CategoryController::class,'index'])
+->name('category')
+->middleware(AuthenticateMiddleware::class);
+Route::get('category/create', [CategoryController::class, 'create'])
+        ->name('category.create')
+->middleware(AuthenticateMiddleware::class);
+Route::post('category/update/{id}', [CategoryController::class, 'update'])
+        ->name('category.update')
+->middleware(AuthenticateMiddleware::class);
+Route::delete('category/delete/{id}', [CategoryController::class, 'delete'])
+        ->name('category.delete')
+->middleware(AuthenticateMiddleware::class);
+
+//Content
+Route::get('content/index',[ContentController::class,'indexAdmin'])
+->name('content.index')
+->middleware(AuthenticateMiddleware::class);
+Route::get('content/create', [ContentController::class, 'create'])
+        ->name('content.create')
+->middleware(AuthenticateMiddleware::class);
+Route::post('content/update/{id}', [ContentController::class, 'update'])
+        ->name('content.update')
+->middleware(AuthenticateMiddleware::class);
+Route::delete('content/delete/{id}', [ContentController::class, 'delete'])
+        ->name('content.delete')
+->middleware(AuthenticateMiddleware::class);
+
+
+//Opinion
+Route::get('opinion',[OpinionController::class,'index'])
+->name('opinion')
+->middleware(AuthenticateMiddleware::class);
+Route::get('opinion/create', [OpinionController::class, 'create'])
+        ->name('opinion.create')
+->middleware(AuthenticateMiddleware::class);
+Route::post('opinion/update/{id}', [OpinionController::class, 'update'])
+        ->name('opinion.update')
+->middleware(AuthenticateMiddleware::class);
+Route::delete('opinion/delete/{id}', [OpinionController::class, 'delete'])
+        ->name('opinion.delete')
+->middleware(AuthenticateMiddleware::class);
 
 
 //Register
@@ -201,18 +278,9 @@ Route::get('privacy', [PrivacyController::class, 'index'])
 //         return response()->json(['message' => 'API Phung is working!']);
 //     });
 // });
-<<<<<<< HEAD
-Route::prefix('api')->group(function(){
-    Route::get('/',[CartController::class,'index']);
-    Route::any('/add',[CartController::class,'add']);
-    Route::put('/update',[CartController::class,'update']);
-    Route::delete('/delete/{id}',[CartController::class,'delete']);
-});
-=======
 // Route::prefix('api')->group(function(){
     Route::get('api/',[CartController::class,'index']);
     Route::any('api/add',[CartController::class,'add']);
     Route::put('api/update',[CartController::class,'update']);
     Route::delete('api/delete/{id}',[CartController::class,'delete']);
 // });
->>>>>>> 74552d279f6bb414e85f1699cd275d6819f3c5a8

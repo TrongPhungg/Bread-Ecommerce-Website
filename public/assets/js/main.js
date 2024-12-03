@@ -225,11 +225,7 @@ if(searchClick){
 
 //API Cart
 const apiBaseUrl = 'http://127.0.0.1:8000/api';
-<<<<<<< HEAD
-const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-=======
 
->>>>>>> 74552d279f6bb414e85f1699cd275d6819f3c5a8
 async function loadCart(){
     const response = await fetch(apiBaseUrl);
     const cart = await response.json();
@@ -271,7 +267,7 @@ async function loadListCart() {
 
     const cartItem = document.getElementById('listCart');
     cartItem.innerHTML = '';
-    let total = 0;
+    let tongtien = 0;
     let dem = 0;
     for (let id in cart) {
         const item = cart[id];
@@ -314,22 +310,21 @@ async function loadListCart() {
                             </tr>
                                 `;
         cartItem.innerHTML += itemHTML;
-        total += item.price*item.quantity;
+        tongtien += item.price*item.quantity;
         dem++;
     }
-
-    let subTotal = document.getElementById("subTotal");
-    subTotal.innerHTML=`<h5 class="mb-0 me-4">Subtotal:</h5>
-                                    <p class="mb-0">${total}</p>`
+    document.getElementById("subTotal").innerHTML=`<h5 class="mb-0 me-4">Subtotal:</h5>
+                                    <p class="mb-0">${tongtien}</p>`
+    document.getElementById("lastTotal").innerHTML = `<h5 class="mb-0 ps-4 me-4">Total</h5>
+                                <p class="mb-0 pe-4">${tongtien}</p>`
+    document.getElementById("checkoutTotal").innerHTML = `<p class="mb-0 text-dark">${tongtien}</p>`
 }
 
-<<<<<<< HEAD
-=======
+
 if(document.getElementById('listCart'))
     loadListCart();
 
 
->>>>>>> 74552d279f6bb414e85f1699cd275d6819f3c5a8
 //AddCart API
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -346,15 +341,11 @@ forms.forEach(form => {
         const price = parseInt(priceProduct.replace("VNĐ","").replace(/,/g,"").trim());
         const image =form.querySelector('#product-hinh').src ;
         let hinh = image.split('/').pop();
-<<<<<<< HEAD
-        const quantity = 1;
-=======
         let quantity;
         if(form.querySelector('#product-quantity'))
             quantity = form.querySelector('#product-quantity').value;
         else 
             quantity = 1;
->>>>>>> 74552d279f6bb414e85f1699cd275d6819f3c5a8
         
 
         // Gửi yêu cầu tới API
@@ -379,102 +370,6 @@ forms.forEach(form => {
 //Delete API
 function handleDelete(event) {
     event.preventDefault(); 
-<<<<<<< HEAD
-
-    
-    const id = document.getElementById('item-id').value;
-
-    if (confirm('Bạn có chắc chắn muốn xóa?')) {
-        fetch(`/api/delete/${id}`, {
-            method: 'DELETE',
-            headers: {
-                // 'X-Requested-With': 'XMLHttpRequest',
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrfToken // Laravel CSRF Token
-            }
-        })
-
-        .then(response => {
-            if (response.ok) {
-                alert('Xóa thành công!');
-                loadCart();
-                loadListCart();
-            } else {
-                return response.json().then(data => {
-                    alert(`Lỗi: ${data.message || 'Không thể xóa.'}`);
-                });
-            }
-        })
-        .catch(error => {
-            console.error('Lỗi:', error);
-            alert('Đã xảy ra lỗi khi gửi yêu cầu.');
-        });
-    }
-}
-// loadListCart();
-loadCart();
-
-
-
-// Toast Message
-// function toast({
-//     title = '',
-//     message = '',
-//     type = 'info',
-//     duration = 3000}){
-//     const main = document.getElementById('toast');
-//     if(main){
-//         const toast = document.createElement('div');
-//         //Auto remove toast
-//         main.appendChild(toast);
-//         const AutoRemoveId = setTimeout(function(){
-//             main.removeChild(toast);
-//         },duration + 1000)
-
-//         // Remove when click
-//         toast.onclick = function(e){
-//             if(e.target.closest('.toast__close')){
-//                 main.removeChild(toast);
-//                 clearTimeout(AutoRemoveId);
-//             }
-//         }
-
-
-//         const icons = {
-//             success : 'fas fa-check-circle',
-//             info : 'fas fa-info-circle',
-//             warning : 'fas fa-exclamation-circle',
-//             error : 'fas fa-exclamation-circle'
-//         };
-//         const icon = icons[type];
-//         const delay = (duration / 1000).toFixed(2);
-//         toast.classList.add('toast',`toast--${type}`);
-//         toast.style.animation = `slideInLeft ease .3s, fadeOut linear 1s ${delay}s forwards`;
-//         toast.innerHTML = `
-//             <div class="toast__icon">
-//                 <i class="${icon}"></i>
-//             </div>
-//             <div class="toast__body">
-//                 <h3 class="toast__title">${title}</h3>
-//                 <p class="toast__msg">${message}</p>
-//             </div>
-//             <div class="toast__close">
-//                 <i class="fa-regular fa-circle-xmark"></i>
-//             </div>` ;
-
-//     }
-// }
-
-// function showSuccessToast($message){
-//     toast({
-//         title: 'Thành công',
-//         message:$message,
-//         type : 'success',
-//         duration : 5000
-//     });
-// }
-
-=======
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     
     const id = document.getElementById('item-id').value;
@@ -493,7 +388,8 @@ loadCart();
             if (response.ok) {
                 alert('Xóa thành công!');
                 loadCart();
-                
+                if(document.getElementById("listCart"))
+                    loadListCart();
             } else {
                 return response.json().then(data => {
                     alert(`Lỗi: ${data.message || 'Không thể xóa.'}`);
@@ -569,7 +465,6 @@ loadCart();
 //     });
 // }
 
->>>>>>> 74552d279f6bb414e85f1699cd275d6819f3c5a8
 // function showErrorToast(){
 //     toast({
 //         title: 'Thất bại',

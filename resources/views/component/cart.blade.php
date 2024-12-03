@@ -69,8 +69,7 @@
                             <div class="p-4">
                                 <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
                                 <div class="d-flex justify-content-between mb-4" id="subTotal">
-                                    <h5 class="mb-0 me-4">Subtotal:</h5>
-                                    <p class="mb-0">$96.00</p>
+                                    
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h5 class="mb-0 me-4">Shipping</h5>
@@ -80,9 +79,8 @@
                                 </div>
                                 <p class="mb-0 text-end">Shipping to Ukraine.</p>
                             </div>
-                            <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-                                <h5 class="mb-0 ps-4 me-4">Total</h5>
-                                <p class="mb-0 pe-4">$99.00</p>
+                            <div id="lastTotal" class="py-4 mb-4 border-top border-bottom d-flex justify-content-between" >
+                                
                             </div>
                             <a href={{route('checkout')}}>
                                 <button 

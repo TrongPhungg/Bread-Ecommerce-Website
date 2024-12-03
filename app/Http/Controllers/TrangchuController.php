@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\sanpham;
 use App\Models\loaisanpham;
+use App\Models\ykien;
+use App\Models\khachhang;
+
 
 
 class TrangchuController extends Controller
@@ -13,9 +16,11 @@ class TrangchuController extends Controller
     public function index()
     {
         $template = 'component.trangchu';
-        $data = sanpham::all();
+        $dssp = sanpham::all();
+        $dskh = khachhang::all();
+        $dsyk = ykien::all();
         $dmsp = loaisanpham::all();
-       return view('layout', compact('template','data','dmsp'));
+       return view('layout', compact('template','dssp','dmsp','dsyk','dskh'));
     }
 
     public function search(Request $request){

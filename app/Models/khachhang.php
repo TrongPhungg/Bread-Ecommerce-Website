@@ -12,4 +12,9 @@ class Khachhang extends Model
     public $incrementing = false;
     protected $keyType = 'string';
     public $timestamps = false;
+
+    public function user()
+    {
+        return $this->belongsTo(user::class, 'IDKhachhang', 'IDKhachhang'); // 'id' là khóa chính của bảng Khachhang
+    }
 }

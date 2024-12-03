@@ -43,46 +43,15 @@
                         <div class="position-relative">
                             <a href="#" class="cart-icon">
                                 <i class="fa fa-shopping-bag fa-2x" onmouseover="loadCart()"></i>
-<<<<<<< HEAD
-                                <span id="slsp" class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">1</span>
-=======
                                 <span id="slsp" class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;"></span>
->>>>>>> 74552d279f6bb414e85f1699cd275d6819f3c5a8
                             </a>
                             <div class="cart-hover-content position-absolute bg-white shadow p-3" style="width: 300px; right: 0; top: 100%; display: none; z-index: 1000; border-radius: 20px;">
                             <div id="cart-item">
                                 <div class="cart-item d-flex align-items-center mb-3" >
-<<<<<<< HEAD
-                                    <div>
-                                        <img src="{{ asset('assets/img/vegetable-item-3.png') }}" class="img-fluid rounded-circle" style="width: 50px;" alt="">
-                                        <div class="ms-3">
-                                            <h6 class="mb-0">Product Name</h6>
-=======
-                                    {{-- <div>
-                                        <img src="{{ asset('assets/img/vegetable-item-3.png') }}" class="img-fluid rounded-circle" style="width: 50px;" alt="">
-                                        <div class="ms-3">
-                                            <h6 class="mb-0"></h6>
->>>>>>> 74552d279f6bb414e85f1699cd275d6819f3c5a8
-                                            <div class="d-flex justify-content-between">
-                                                <span class="text-primary">$2.99</span>
-                                                <span class="text-secondary ms-3">x 1</span>
-                                            </div>
-                                        </div>
-<<<<<<< HEAD
-                                    </div>
-                                </div>
-                            </div>
-                            {{-- <div>
-                                <button class="btn btn-sm text-danger ms-auto remove-item ">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div> --}}
-=======
-                                    </div> --}}
+                                    
                                 </div>
                             </div>
 
->>>>>>> 74552d279f6bb414e85f1699cd275d6819f3c5a8
                             <div>
                                 <hr>
                                 <div class="d-flex justify-content-between" id="total">

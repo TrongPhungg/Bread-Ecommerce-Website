@@ -9,11 +9,8 @@ use App\Models\sanpham;
 use App\Models\donhang;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-<<<<<<< HEAD
-=======
 use App\Models\khachhang;
 
->>>>>>> 74552d279f6bb414e85f1699cd275d6819f3c5a8
 
 class CartController extends Controller
 {
@@ -25,49 +22,6 @@ class CartController extends Controller
 
     public function index()
     {
-<<<<<<< HEAD
-        $cart = session()->get('cart', []);
-        if(empty($cart))
-            {
-        if(Auth::user())
-        {
-            $user_id = Auth::user()->IDKhachhang;
-            $dh = donhang::where('IDKhachhang', $user_id)->first();
-            $data = chitietdonhang::where('IDDonhang',$dh->IDDonhang)->get();
-            $dataFormatted = $data->map(function ($item){
-            $sp = sanpham::where('IDSanpham', $item->IDSanpham)->first();
-            return [
-                'id' => $item->IDSanpham,
-                'name' => $sp->Tensanpham,
-                'price' => $item->Dongia,
-                'quantity' => $item->Soluongsp,
-                'hinh' =>$sp->Hinh,
-            ];
-        })->toArray();
-        $cart = $dataFormatted;
-        }
-    }else{
-        if(Auth::user()) {
-            $user_id = Auth::user()->IDKhachhang;
-            $dh = donhang::where('IDKhachhang', $user_id)->first();  // Lấy đơn hàng của khách
-    
-            // Duyệt qua các sản phẩm trong giỏ hàng
-            foreach($cart as $item) {
-                // Kiểm tra xem sản phẩm này đã có trong chi tiết đơn hàng chưa
-                DB::table('chitietdonhang')->updateOrInsert(
-                    ['IDSanpham' => $item->id, 'IDDonhang' => $dh->IDDonhang], 
-                    [
-                        'Dongia' => $item->price,
-                        'Soluongsp' => $item->quantity,
-                    ]
-                );
-            }
-        }
-    }
-        session()->put('cart',$cart);
-        return response()->json($cart);
-        
-=======
         $cart = session()->get('cart', new \stdClass()); 
 
         if (empty((array)$cart)) { 
@@ -109,6 +63,7 @@ class CartController extends Controller
 	        $dh->Ngaylapdh= now();
             $dh->trangthaidh = '';
             $dh->Tongtien = 0;
+            $dh->Diachi = '';
             $dh->save();
         }
         foreach ($cart as $item) {
@@ -128,7 +83,6 @@ session()->put('cart', $cart);
 
 // Trả về giỏ hàng dạng JSON
 return response()->json($cart);
->>>>>>> 74552d279f6bb414e85f1699cd275d6819f3c5a8
     }
 
 
@@ -165,58 +119,7 @@ return response()->json($cart);
         unset($cart->{$id});
 
         session()->put('cart', $cart);
-        
-        
 
-<<<<<<< HEAD
-        // if(Auth::user()){
-        // DB::table('chitietdonhang')->updateOrInsert(
-        //     ['IDSanpham' => $request->id, 'IDDonhang' => Auth::user()->IDKhachhang], // Điều kiện cập nhật
-        //     [
-        //         'Dongia' => $request->price,
-        //         'Soluongsp' => $cart[$request->id]['quantity'],
-        //     ]
-        // );
-        // }
-        return response()->json(['message' => 'Product added to cart!', 'cart' => $cart]);
-    }
-
-    // public function update(Request $request)
-    // {
-    //     $request->validate([
-    //         'id' => 'required|integer',
-    //         'quantity' => 'required|integer|min:1',
-    //     ]);
-
-    //     $cart = session()->get('cart', []);
-
-    //     if (isset($cart[$request->id])) {
-    //         $cart[$request->id]['quantity'] = $request->quantity;
-    //         session()->put('cart', $cart);
-
-    //         return response()->json(['message' => 'Cart updated!', 'cart' => $cart]);
-    //     }
-
-    //     return response()->json(['message' => 'Product not found in cart.'], 404);
-    // }
-
-    public function delete($id)
-    {   
-        // $request->validate([
-        //     'id' => 'required|integer',
-        // ]);
-
-        $cart = session()->get('cart', []);
-
-        if (isset($cart[$id])) {
-            unset($cart[$id]);
-            session()->put('cart', $cart);
-
-            return response()->json(['message' => 'Product removed!', 'cart' => $cart]);
-        }
-
-        return response()->json(['message' => 'Product not found in cart.'], 404);
-=======
         $dh = donhang::where('IDKhachhang',Auth::user()->IDKhachhang)
                         ->where('Trangthaidh',"")
                         ->first();
@@ -237,6 +140,5 @@ return response()->json($cart);
     return response()->json([
         'message' => 'Product not found in cart.'
     ], 404);
->>>>>>> 74552d279f6bb414e85f1699cd275d6819f3c5a8
     }
 }
