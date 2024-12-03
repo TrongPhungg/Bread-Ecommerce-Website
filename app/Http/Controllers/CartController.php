@@ -48,24 +48,13 @@ class CartController extends Controller
             // Duyệt qua các sản phẩm trong giỏ hàng
             foreach($cart as $item) {
                 // Kiểm tra xem sản phẩm này đã có trong chi tiết đơn hàng chưa
-                $existingItem = chitietdonhang::where('IDSanpham', $item->id)
-                                                ->where('IDDonhang', $dh->IDDonhang)
-                                                ->first();
-    
-                if ($existingItem) {
-                    // Nếu có rồi thì cập nhật số lượng (vì có thể người dùng thay đổi số lượng sản phẩm)
-                    $existingItem->Soluongsp += $item['quantity'];
-                    $existingItem->save();  // Lưu cập nhật
-                } else {
-                    // Nếu chưa có thì insert sản phẩm mới vào bảng chitietdonhang
-                    chitietdonhang::create([
-                        'IDSanpham' => $item['id'],
-                        'IDDonhang' => $dh->IDDonhang,
-                        'Dongia' => $item['price'],
-                        'Soluongsp' => $item['quantity'],
-                        'Hinh' => $item['hinh'],
-                    ]);
-                }
+                DB::table('chitietdonhang')->updateOrInsert(
+                    ['IDSanpham' => $item->id, 'IDDonhang' => $dh->IDDonhang], 
+                    [
+                        'Dongia' => $item->price,
+                        'Soluongsp' => $item->quantity,
+                    ]
+                );
             }
         }
     }
