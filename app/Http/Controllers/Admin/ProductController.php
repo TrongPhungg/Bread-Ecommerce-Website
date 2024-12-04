@@ -14,8 +14,6 @@ class ProductController extends Controller
         $template = 'admin.product.index';
         $data = sanpham::all();
         $data = sanpham::paginate(5);
-        
-        // dd($data);
 
         return view('admin.layout', compact('template','data'));
     }

@@ -6,14 +6,15 @@
         <div class="container-fluid py-5">
             <div class="container py-5">
                 <h1 class="mb-4">Billing details</h1>
-                <form action="#">
+                <form action="{{route('checkout.finish',Auth::user()->IDKhachhang)}}" method="POST">
+                    @csrf
                     <div class="row g-5">
                         <div class="col-md-12 col-lg-6 col-xl-7">
                             <div class="row">
                                 <div class="col-md-12 col-lg-6">
                                     <div class="form-item w-100">
-                                        <label class="form-label my-3">First Name<sup>*</sup></label>
-                                        <input type="text" class="form-control">
+                                        <label class="form-label my-3">Tên Khách hàng<sup>*</sup></label>
+                                        <input type="text" class="form-control" value="{{$kh->TenKhachhang}}">
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-lg-6">
@@ -29,7 +30,7 @@
                             </div>
                             <div class="form-item">
                                 <label class="form-label my-3">Address <sup>*</sup></label>
-                                <input type="text" class="form-control" placeholder="House Number Street Name">
+                                <input type="text" name="Diachi" class="form-control" value="{{$kh->Diachi}}">
                             </div>
                             <div class="form-item">
                                 <label class="form-label my-3">Town/City<sup>*</sup></label>
@@ -45,11 +46,11 @@
                             </div>
                             <div class="form-item">
                                 <label class="form-label my-3">Mobile<sup>*</sup></label>
-                                <input type="tel" class="form-control">
+                                <input type="tel" class="form-control" value={{$kh->Sodienthoai}}>
                             </div>
                             <div class="form-item">
                                 <label class="form-label my-3">Email Address<sup>*</sup></label>
-                                <input type="email" class="form-control">
+                                <input type="email" class="form-control" value={{$kh->user->email}}>
                             </div>
                             <div class="form-check my-3">
                                 <input type="checkbox" class="form-check-input" id="Account-1" name="Accounts" value="Accounts">
@@ -77,39 +78,23 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach($data as $v)
+                                            @foreach($dssp as $sp)
+                                                @if($v->IDSanpham == $sp->IDSanpham)
                                         <tr>
                                             <th scope="row">
                                                 <div class="d-flex align-items-center mt-2">
-                                                    <img src="{{ asset('assets/img/vegetable-item-2.jpg') }}" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
+                                                    <img src="{{ asset('assets/img/'.$sp->Hinh) }}" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
                                                 </div>
                                             </th>
-                                            <td class="py-5">Awesome Brocoli</td>
-                                            <td class="py-5">$69.00</td>
-                                            <td class="py-5">2</td>
-                                            <td class="py-5">$138.00</td>
+                                            <td class="py-5">{{$sp->Tensanpham}}</td>
+                                            <td class="py-5">{{$v->Dongia}}</td>
+                                            <td class="py-5">{{$v->Soluongsp}}</td>
+                                            <td class="py-5">{{$v->Dongia*$v->Soluongsp}}</td>
                                         </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                <div class="d-flex align-items-center mt-2">
-                                                    <img src="{{ asset('assets/img/vegetable-item-5.jpg') }}" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
-                                                </div>
-                                            </th>
-                                            <td class="py-5">Potatoes</td>
-                                            <td class="py-5">$69.00</td>
-                                            <td class="py-5">2</td>
-                                            <td class="py-5">$138.00</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                <div class="d-flex align-items-center mt-2">
-                                                    <img src="{{ asset('assets/img/vegetable-item-3.png') }}" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
-                                                </div>
-                                            </th>
-                                            <td class="py-5">Big Banana</td>
-                                            <td class="py-5">$69.00</td>
-                                            <td class="py-5">2</td>
-                                            <td class="py-5">$138.00</td>
-                                        </tr>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
                                         <tr>
                                             <th scope="row">
                                             </th>
@@ -119,8 +104,17 @@
                                                 <p class="mb-0 text-dark py-3">Subtotal</p>
                                             </td>
                                             <td class="py-5">
-                                                <div class="py-3 border-bottom border-top">
-                                                    <p class="mb-0 text-dark">$414.00</p>
+                                                <div id="checkoutTotal" class="py-3 border-bottom border-top" >
+                                                    <p class="mb-0 text-dark">
+                                                        @php
+                                                            $tongtien = 0;
+                                                            foreach($data as $v)
+                                                            {
+                                                                $tongtien += $v->Dongia*$v->Soluongsp;
+                                                            }
+                                                            echo $tongtien;
+                                                        @endphp
+                                                    </p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -155,7 +149,12 @@
                                             <td class="py-5"></td>
                                             <td class="py-5">
                                                 <div class="py-3 border-bottom border-top">
-                                                    <p class="mb-0 text-dark">$135.00</p>
+                                                    <p class="mb-0 text-dark">
+                                                        @php
+                                                            echo $tongtien;
+                                                        @endphp
+                                                    <input type="hidden" name="Tongtien" value={{$tongtien}}>
+                                                    </p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -196,7 +195,7 @@
                                 </div>
                             </div>
                             <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                                <button type="button" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place Order</button>
+                                <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place Order</button>
                             </div>
                         </div>
                     </div>

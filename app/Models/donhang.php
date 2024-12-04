@@ -11,4 +11,11 @@ class donhang extends Model
     public $incrementing = true;
     public $timestamps = false;
 
+
+    protected $fillable = [
+        'Ngaylapdh',
+        'Trangthaidh',
+        'Tongtien',
+        'Diachi'
+    ];
 }

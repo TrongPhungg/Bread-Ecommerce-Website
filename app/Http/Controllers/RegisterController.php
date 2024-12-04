@@ -41,25 +41,25 @@ class RegisterController extends Controller
             'Password.required' => 'Mật khẩu không được để trống',
         ]);
         try {
-            $khachhang = new khachhang();
-            $khachhang->IDKhachhang = $validated['IDKhachhang'];
-            $khachhang->TenKhachhang = $validated['TenKhachhang'];
-            $khachhang->GioiTinh = $validated['GioiTinh'];
-            $khachhang->NgaySinh = $validated['NgaySinh'];
-            $khachhang->DiaChi = $validated['DiaChi'];
-            $khachhang->SoDienThoai = $validated['SoDienThoai'];
-            $khachhang->save();
+        $khachhang = new khachhang();
+        $khachhang->IDKhachhang = $validated['IDKhachhang'];
+        $khachhang->TenKhachhang = $validated['TenKhachhang'];
+        $khachhang->GioiTinh = $validated['GioiTinh'];
+        $khachhang->NgaySinh = $validated['NgaySinh'];
+        $khachhang->DiaChi = $validated['DiaChi'];
+        $khachhang->SoDienThoai = $validated['SoDienThoai'];
+        $khachhang->save();
 
-            
-            $user = new User();
-            $user->email = $validated['Email'];
-            $user->password = Hash::make($validated['Password']);
-            $user->role = 0;
-            $user->IDKhachhang = $khachhang->IDKhachhang;
-            $user->save();
+        $user = new User();
+        $user->email = $validated['Email'];
+        $user->password = Hash::make($validated['Password']);
+        $user->role = 0;
+        $user->IDKhachhang = $khachhang->IDKhachhang;
+        
+        $user->save();
             DB::beginTransaction();
             return redirect('/adminz') ->with('res_success', 'Đăng ký thành công!');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('res_error', 'Đã xảy ra lỗi trong quá trình đăng ký');
         }

@@ -90,7 +90,7 @@
                             <div class="row g-4" id="showProducts">
                                 <div class="col-lg-12">
                                     <div class="row g-4">
-                                        @foreach($data as $v)
+                                        @foreach($dssp as $v)
                                         <div class="col-md-6 col-lg-4 col-xl-3">
                                             <div class="rounded position-relative fruite-item">
                                                 <div class="fruite-img">

@@ -267,7 +267,7 @@ async function loadListCart() {
 
     const cartItem = document.getElementById('listCart');
     cartItem.innerHTML = '';
-    let total = 0;
+    let tongtien = 0;
     let dem = 0;
     for (let id in cart) {
         const item = cart[id];
@@ -310,14 +310,16 @@ async function loadListCart() {
                             </tr>
                                 `;
         cartItem.innerHTML += itemHTML;
-        total += item.price*item.quantity;
+        tongtien += item.price*item.quantity;
         dem++;
     }
-
-    let subTotal = document.getElementById("subTotal");
-    subTotal.innerHTML=`<h5 class="mb-0 me-4">Subtotal:</h5>
-                                    <p class="mb-0">${total}</p>`
+    document.getElementById("subTotal").innerHTML=`<h5 class="mb-0 me-4">Subtotal:</h5>
+                                    <p class="mb-0">${tongtien}</p>`
+    document.getElementById("lastTotal").innerHTML = `<h5 class="mb-0 ps-4 me-4">Total</h5>
+                                <p class="mb-0 pe-4">${tongtien}</p>`
+    document.getElementById("checkoutTotal").innerHTML = `<p class="mb-0 text-dark">${tongtien}</p>`
 }
+
 
 if(document.getElementById('listCart'))
     loadListCart();
@@ -386,7 +388,8 @@ function handleDelete(event) {
             if (response.ok) {
                 alert('Xóa thành công!');
                 loadCart();
-                
+                if(document.getElementById("listCart"))
+                    loadListCart();
             } else {
                 return response.json().then(data => {
                     alert(`Lỗi: ${data.message || 'Không thể xóa.'}`);

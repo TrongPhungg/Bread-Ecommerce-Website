@@ -1,3 +1,4 @@
+
 <div class="container">
   <div class="page-inner">
     <div class="page-header">
@@ -12,94 +13,82 @@
           <i class="icon-arrow-right"></i>
         </li>
         <li class="nav-item">
-          <a href="#">Người dùng</a>
+          <a href="#">Sản phẩm</a>
         </li>
         <li class="separator">
           <i class="icon-arrow-right"></i>
         </li>
         <li class="nav-item">
-          <a href="{{route('user.index')}}">Danh sách người dùng</a>
+          <a href="{{route('product.index')}}">Danh mục sản phẩm</a>
         </li>
       </ul>
     </div>
-    @if(session('edit_success'))
-    <div class="alert alert-success" id="edit-alert" style="background-color: #28a745; color: white;">
-        {{ session('edit_success') }}
-    </div>
-    @endif
-    @if(session('delete_error')) 
-    <div class="alert alert-danger" id="delete-alert" style="background-color: #dc3545; color: white;">
-        {{ session('delete_error') }}
-    </div>
-    @endif
-    @if(session('create_success')) 
-    <div class="alert alert-success" id="create-alert" style="background-color: #28a745; color: white;">
-        {{ session('create_success') }}
-    </div>
-    @endif
-
-    <script>
-        setTimeout(function() {
-            if(document.getElementById('edit-alert')) {
-                document.getElementById('edit-alert').style.display = 'none';
-            }
-            if(document.getElementById('delete-alert')) {
-                document.getElementById('delete-alert').style.display = 'none';
-            }
-            if(document.getElementById('create-alert')) {
-                document.getElementById('create-alert').style.display = 'none';
-            }
-        }, 2000);
-    </script>
     <div class="row">
       <div class="card">
-        <div class="my-2">
-          <a class="btn btn-primary" href="{{ route('user.create') }}">Thêm người dùng</a>
-        </div>
         <table class="mt-3 table table-hover">
           <tr>
-            <td>ID</td>
-            <td>ID khách hàng</td>
-            <td>Email</td>
-            <td>Vai trò</td>
-            <td></td>
-            <td></td>
+              <td>Mã đánh giá</td>
+              <td>Tên khách hàng</td>
+              <td>Tên sản phẩm</td>
+              <td>Đánh giá</td>
+              <td>Số điểm</td>
+              <td>Ngày thực hiện đánh giá</td>
+              <td>Trạng thái đánh giá</td>
+              <td></td>
           </tr>
-          @foreach($data as $user)
+          @foreach($data as $v)
           <tr>
-            <td>{{$user->id}}</td>
-            <td>{{$user->IDKhachhang}}</td>
-            <td>{{$user->email}}</td>
-            <td>
-              @if($user->role === 1)
-                Admin
-              @else
-                Khách hàng
-              @endif
-            </td>
-            <td>
-              <form action="{{ route('user.edit', $user->id) }}" method="GET" style="display: inline;">
-                <button type="submit" style="background:none; border:none; cursor:pointer;">
-                  <a class="far fa-edit fa-2x" style="color:black;"></a>
-                </button>
-              </form>
-            </td>
-            <td>
-              <form action="{{ route('user.delete', $user->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa người dùng {{$user->name}} không?');">
-                @csrf
-                @method('delete')
-                <button type="submit" style="background:none; border:none; cursor:pointer;">
-                  <a class="fa fa-ban fa-2x" style="color:red;"></a>
-                </button>
-              </form>
-            </td>
+              <td>{{$v->IDDanhgia}}</td>
+              <td>
+                @php
+                foreach($dskh as $kh){
+                  if($kh->IDKhachhang == $v->IDKhachhang)
+                      echo $kh->TenKhachhang;
+                }
+                @endphp
+              </td>
+              <td>
+                @php
+                foreach($dssp as $sp){
+                  if($sp->IDSanpham == $v->IDSanpham)
+                      echo $sp->Tensanpham;
+                }
+                @endphp
+              </td>
+              <td>{{$v->Danhgia}}</td>
+              <td>{{$v->Sodiem}}</td>
+              <td>{{$v->Ngaydanhgia}}</td>
+              <td>
+                @switch($v->Trangthaidg)
+                @case("1")
+                <span class="badge bg-success">Hiển thị</span>
+                @break
+                @case("0")
+                <span class="badge bg-danger">Không hiển thị</span>
+                @break
+                @endswitch
+              </td>
+              <td>
+                  {{-- <form action="{{route('opinion.delete',$v->IDDanhgia)}}" method="POST"
+                  style="display: inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa đánh giá {{$v->IDDanhgia}} không?');">
+                      @csrf
+                      @method('delete')
+                      <button type="submit" style="background:none; border:none; cursor:pointer;">
+                          <a class="fa fa-ban fa-2x" style="color:red;"></a>
+                      </button>
+                  </form> --}}
+                  <a href="{{route('update',$v->IDDanhgia)}}" class="btn btn-primary">Cập nhật trạng thái</a>
+              </td>
           </tr>
           @endforeach
         </table>
-        <div class="d-flex justify-content-center mt-3">
-            {!! $data->links() !!}
+       <div>
+        <div>
+          {{$data->links()}}
         </div>
+       </div>
       </div>
+    </div>
     </div>
   </div>
 </div>

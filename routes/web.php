@@ -10,6 +10,11 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Middleware\LoginMiddleware;
 use App\Http\Middleware\AuthenticateMiddleware;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ContentAdminController;
+use App\Http\Controllers\Admin\OpinionController;
+use App\Http\Middleware\AdminMiddleware;
 
 
 //user
@@ -25,6 +30,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\PrivacyController;
+use App\Http\Controllers\OrderUserController;
 
 
 Route::get('/', [TrangchuController::class,'index']
@@ -40,12 +46,12 @@ Route::post('login', [AuthController::class, 'login'])
 ->middleware(LoginMiddleware::class);
 
 //Dashboard
-Route::get('dashboard', [DashboardController::class, 'index'])
-->name('dashboard.index')
-->middleware(AuthenticateMiddleware::class);
+Route::middleware([AuthenticateMiddleware::class, AdminMiddleware::class])->group(function() {
+    //Dashboard
+    Route::get('dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard.index');
 
-
-Route::middleware([AuthenticateMiddleware::class])->group(function() {
+    //Product
     Route::get('product', [ProductController::class, 'index'])
         ->name('product.index');
     Route::get('product/create', [ProductController::class, 'create'])
@@ -54,83 +60,46 @@ Route::middleware([AuthenticateMiddleware::class])->group(function() {
         ->name('handlecreate');
     Route::delete('product/{id}', [ProductController::class, 'delete'])
         ->name('product.delete');
+    Route::post('product/update/{id}', [ProductController::class, 'update'])
+        ->name('product.update');
+    Route::put('product/{id}', [ProductController::class, 'handleupdate'])
+        ->name('handleupdate');
+
+    //Customer
+    Route::get('customer', [CustomerController::class, 'index'])
+        ->name('customer.index');
+    Route::post('customer/update/{id}', [CustomerController::class, 'update'])
+        ->name('customer.update');
+    Route::put('customer/{id}', [CustomerController::class, 'handleupdate'])
+        ->name('handleupdate');
+    Route::delete('customer/{id}', [CustomerController::class, 'delete'])
+        ->name('customer.delete');
+
+    //Order
+    Route::get('order', [OrderController::class, 'index'])
+        ->name('order.index');
+    Route::post('order/detail/{id}', [OrderController::class, 'detail'])
+        ->name('order.detail');
+
+    //User
+    Route::get('user', [UserController::class, 'index'])
+        ->name('user.index');
+    Route::get('user/create', [UserController::class, 'create'])
+        ->name('user.create');
+    Route::post('user/store', [UserController::class, 'store'])
+        ->name('user.store');
+    Route::get('user/edit/{id}', [UserController::class, 'edit'])
+        ->name('user.edit');
+    Route::put('user/update/{id}', [UserController::class, 'update'])
+        ->name('user.update');
+    Route::delete('user/delete/{id}', [UserController::class, 'delete'])
+        ->name('user.delete');
 });
-
-//Product
-Route::get('product', [ProductController::class, 'index'])
-->name('product.index')
-->middleware(AuthenticateMiddleware::class);
-Route::get('product/create', [ProductController::class, 'create'])
-->name('product.create')
-->middleware(AuthenticateMiddleware::class);
-Route::post('product', [ProductController::class, 'handlecreate'])
-->name('handlecreate')
-->middleware(AuthenticateMiddleware::class);
-Route::delete('product/{id}', [ProductController::class, 'delete'])
-->name('product.delete')
-->middleware(AuthenticateMiddleware::class);
-
-
-Route::post('product/update/{id}', [ProductController::class, 'update'])
-->name('product.update')
-->middleware(AuthenticateMiddleware::class);
-Route::put('product/{id}', [ProductController::class, 'handleupdate'])
-->name('handleupdate')
-->middleware(AuthenticateMiddleware::class);
 
 Route::get('search-products',[ShopController::class,'search'])->name('search.product');
 
-
-//Customer
-Route::get('customer', [CustomerController::class, 'index'])
-->name('customer.index')
-->middleware(AuthenticateMiddleware::class);
-
-Route::post('customer/update/{id}', [CustomerController::class, 'update'])
-->name('customer.update')
-->middleware(AuthenticateMiddleware::class);
-Route::put('customer/{id}', [CustomerController::class, 'handleupdate'])
-->name('handleupdate')
-->middleware(AuthenticateMiddleware::class);
-
-Route::delete('customer/{id}', [CustomerController::class, 'delete'])
-->name('customer.delete')
-->middleware(AuthenticateMiddleware::class);
-
-
-//Order
-Route::get('order', [OrderController::class, 'index'])
-->name('order.index')
-->middleware(AuthenticateMiddleware::class);
-Route::post('order/detail/{id}', [OrderController::class, 'detail'])
-->name('order.detail')
-->middleware(AuthenticateMiddleware::class);
-
 Route::put('order/{id}', [OrderController::class, 'update'])
 ->name('order.update');
-
-//danhsachuser
-Route::get('user', [UserController::class, 'index'])
-->name('user.index')
-->middleware(AuthenticateMiddleware::class);
-//create
-Route::get('user/create', [UserController::class, 'create'])
-->name('user.create')
-->middleware(AuthenticateMiddleware::class);
-Route::post('user/store', [UserController::class, 'store'])
-->name('user.store')
-->middleware(AuthenticateMiddleware::class);
-//edit
-Route::get('user/edit/{id}', [UserController::class, 'edit'])
-    ->name('user.edit')
-    ->middleware(AuthenticateMiddleware::class);
-Route::put('user/update/{id}', [UserController::class, 'update'])
-    ->name('user.update')
-    ->middleware(AuthenticateMiddleware::class);
-//delete
-Route::delete('user/delete/{id}', [UserController::class, 'delete'])
-    ->name('user.delete')
-    ->middleware(AuthenticateMiddleware::class);
 
 
 
@@ -158,14 +127,22 @@ Route::get('shopdetail', [ShopdetailController::class, 'index'])
 //Cart
 Route::get('cart', [CartController::class, 'showCart'])
 ->name('cart');
+
+
 //Checkout
 Route::get('checkout', [CheckoutController::class, 'index'])
-->name('checkout');
+->name('checkout')
+->middleware(AuthenticateMiddleware::class);
+Route::post('checkout/finish/{id}',[CheckoutController::class,'update'])
+->name('checkout.finish')
+->middleware(AuthenticateMiddleware::class);
+
+
+
 //Contact
 Route::get('contact', [ContactController::class, 'index'])
 ->name('contact');
-Route::post('contact/send', [ContactController::class, 'send'])
-->name('contact.send');
+
 //Content
 Route::get('content', [ContentController::class, 'index'])
 ->name('content');
@@ -183,6 +160,67 @@ Route::get('profile/edit/{id}', [ProfileController::class, 'update'])
 Route::put('profile/{id}', [ProfileController::class, 'handleupdate'])
 ->name('profile.handleupdate');
 
+//Review
+Route::get('review',[ReviewController::class,'index'])
+->name('review')
+->middleware(AuthenticateMiddleware::class);
+Route::delete('category/delete/{id}', [ReviewController::class, 'delete'])
+        ->name('review.delete')
+->middleware(AuthenticateMiddleware::class);
+
+Route::get('review/update/{id}', [ReviewController::class, 'update'])
+->name('update')
+->middleware(AuthenticateMiddleware::class);
+
+
+Route::post('review/create', [ShopdetailController::class, 'handlecreate'])
+->name('handlecreate')
+->middleware(AuthenticateMiddleware::class);
+
+
+
+//Category
+Route::get('category',[CategoryController::class,'index'])
+->name('category')
+->middleware(AuthenticateMiddleware::class);
+Route::get('category/create', [CategoryController::class, 'create'])
+        ->name('category.create')
+->middleware(AuthenticateMiddleware::class);
+Route::post('category/update/{id}', [CategoryController::class, 'update'])
+        ->name('category.update')
+->middleware(AuthenticateMiddleware::class);
+Route::delete('category/delete/{id}', [CategoryController::class, 'delete'])
+        ->name('category.delete')
+->middleware(AuthenticateMiddleware::class);
+
+//Content
+Route::get('content/index',[ContentController::class,'indexAdmin'])
+->name('content.index')
+->middleware(AuthenticateMiddleware::class);
+Route::get('content/create', [ContentController::class, 'create'])
+        ->name('content.create')
+->middleware(AuthenticateMiddleware::class);
+Route::post('content/update/{id}', [ContentController::class, 'update'])
+        ->name('content.update')
+->middleware(AuthenticateMiddleware::class);
+Route::delete('content/delete/{id}', [ContentController::class, 'delete'])
+        ->name('content.delete')
+->middleware(AuthenticateMiddleware::class);
+
+
+//Opinion
+Route::get('opinion',[OpinionController::class,'index'])
+->name('opinion')
+->middleware(AuthenticateMiddleware::class);
+Route::get('opinion/create', [OpinionController::class, 'create'])
+        ->name('opinion.create')
+->middleware(AuthenticateMiddleware::class);
+Route::post('opinion/update/{id}', [OpinionController::class, 'update'])
+        ->name('opinion.update')
+->middleware(AuthenticateMiddleware::class);
+Route::delete('opinion/delete/{id}', [OpinionController::class, 'delete'])
+        ->name('opinion.delete')
+->middleware(AuthenticateMiddleware::class);
 
 
 //Register
@@ -194,6 +232,13 @@ Route::post('register', [RegisterController::class, 'handlecreate'])
 //Privacy
 Route::get('privacy', [PrivacyController::class, 'index'])
 ->name('privacy');
+//Order
+Route::middleware(['auth'])->group(function () {
+    Route::get('/my-orders', [OrderUserController::class, 'index'])->name('user.orders');
+    Route::get('/my-orders/{id}', [OrderUserController::class, 'detail'])->name('user.orders.detail');
+    Route::get('/my-history', [OrderUserController::class, 'history'])->name('user.history');
+});
+
 
 
 //API giỏ hàng

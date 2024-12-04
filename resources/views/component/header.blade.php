@@ -48,16 +48,7 @@
                             <div class="cart-hover-content position-absolute bg-white shadow p-3" style="width: 300px; right: 0; top: 100%; display: none; z-index: 1000; border-radius: 20px;">
                             <div id="cart-item">
                                 <div class="cart-item d-flex align-items-center mb-3" >
-                                    {{-- <div>
-                                        <img src="{{ asset('assets/img/vegetable-item-3.png') }}" class="img-fluid rounded-circle" style="width: 50px;" alt="">
-                                        <div class="ms-3">
-                                            <h6 class="mb-0"></h6>
-                                            <div class="d-flex justify-content-between">
-                                                <span class="text-primary">$2.99</span>
-                                                <span class="text-secondary ms-3">x 1</span>
-                                            </div>
-                                        </div>
-                                    </div> --}}
+                                    
                                 </div>
                             </div>
 
@@ -87,8 +78,10 @@
                                 </div>
                                 <a class="dropdown-item py-3 px-4 d-flex align-items-center hover-bg-light" href="{{ route('profile') }}">
                                     <i class="fas fa-user-circle me-3 text-primary"></i>Thông tin</a>
-                                <a class="dropdown-item py-3 px-4 d-flex align-items-center hover-bg-light" href="">
+                                <a class="dropdown-item py-3 px-4 d-flex align-items-center hover-bg-light" href="{{ route('user.orders') }}">
                                     <i class="fas fa-shopping-bag me-3 text-primary"></i>Đơn hàng</a>
+                                <a class="dropdown-item py-3 px-4 d-flex align-items-center hover-bg-light" href="{{ route('user.history') }}">
+                                    <i class="fas fa-history me-3 text-primary"></i>Lịch sử mua hàng</a>
                                 <a class="dropdown-item py-3 px-4 d-flex align-items-center hover-bg-light" href="">
                                 <div class="dropdown-divider my-2"></div>
                                 <a class="dropdown-item py-3 px-4 d-flex align-items-center text-danger hover-bg-danger-light" href="{{ route('auth.logout') }}">
