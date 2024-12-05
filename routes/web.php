@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContentAdminController;
 use App\Http\Controllers\Admin\OpinionController;
+
 use App\Http\Middleware\AdminMiddleware;
 
 
@@ -97,6 +98,34 @@ Route::middleware([AuthenticateMiddleware::class, AdminMiddleware::class])->grou
 });
 
 Route::get('search-products',[ShopController::class,'search'])->name('search.product');
+
+
+//Customer
+Route::get('customer', [CustomerController::class, 'index'])
+->name('customer.index')
+->middleware(AuthenticateMiddleware::class);
+
+Route::post('customer/update/{id}', [CustomerController::class, 'update'])
+->name('customer.update')
+->middleware(AuthenticateMiddleware::class);
+Route::put('customer/{id}', [CustomerController::class, 'handleupdate'])
+->name('handleupdate')
+->middleware(AuthenticateMiddleware::class);
+
+Route::delete('customer/{id}', [CustomerController::class, 'delete'])
+->name('customer.delete')
+->middleware(AuthenticateMiddleware::class);
+
+
+
+
+//Order
+Route::get('order', [OrderController::class, 'index'])
+->name('order.index')
+->middleware(AuthenticateMiddleware::class);
+Route::post('order/detail/{id}', [OrderController::class, 'detail'])
+->name('order.detail')
+->middleware(AuthenticateMiddleware::class);
 
 Route::put('order/{id}', [OrderController::class, 'update'])
 ->name('order.update');
